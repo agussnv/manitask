@@ -24,13 +24,11 @@ async function createReq() {
 
 async function createRegisterRequest(data) {
   const r1 = new Requester();
-  r1.postRequest(
-    {
-      email: data.email,
-      texto: data.texto
-    },
- "http://localhost:3001/users/register"
-  );
+  let rest = await r1.postRequest(
+    {email: data.email,password: data.password},
+    "http://localhost:3002/users/register");
+  if(rest.res == "pepe")
+    alert("benjamin");
 }
 
 /**

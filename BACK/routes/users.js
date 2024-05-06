@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET users listing. */
-router.get('/login', async function(req, res, next) {
+router.post('/login', async function(req, res, next) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
@@ -32,23 +32,28 @@ router.get('/login', async function(req, res, next) {
   }
 });
 
-router.get('/register', async function(req, res, next) {
+router.post('/register', async function(req, res, next) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    let user = {
-      email: "agus@gmail.com",
-      texto: "hola mundo"
+    console.log("concha");
+    const userExist = await client
+    .db("gestInc")
+    .collection("test_js")
+    .findOne({email: req.body.email});
+    console.log(userExist);
+    if(!userExist){
+      const result = await client.db("gestInc").collection("test_js").insertOne({email: req.body.email,password: req.body.password});
+      console.log(result);
+    }else{
+      res.send(JSON.stringify({res: "pepe"}));
     }
-
-    const result = await client.db("gestInc").collection("test_js").insertOne(user);
-    console.log(result);
-    const deletear = await client.db("gestInc").collection("test_js").deleteMany({ texto: 'hola mundo' });
+    /*const deletear = await client.db("gestInc").collection("test_js").deleteMany({ texto: 'hola mundo' });
     console.log(deletear);
     const updatear = await client.db("gestInc").collection("test_js").updateOne({ texto: "chau" },{$set: { texto: "hola"}});
     console.log(updatear);
     const trobar = await client.db("gestInc").collection("test_js").findOne({email: "agustin@gmail.com"});
-    console.log(trobar);
+    console.log(trobar);*/
     res.send("correcto chavalin")
   } finally {
     // Ensures that the client will close when you finish/error
