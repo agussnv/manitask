@@ -57,16 +57,43 @@ async function createResetPasswordRequest(data){
   const r1 = new Requester();
   let rest = await r1.postRequest({
     email: data.email,
-    password: data.password
-  },"http://localhost:3002/users/login");
+    password1: data.password1,
+    password2: data.password2
+  },"http://localhost:3002/users/reset");
   if(rest.res == 1){
     document.getElementById("diverror").style.display = "flex";
-  }else{
-    alert("correctoo");
+    document.getElementById("diverror2").style.display = "none";
+  }else if(rest.res == 2){
+    document.getElementById("diverror2").style.display = "flex";
     document.getElementById("diverror").style.display = "none";
+  }else{
+    document.getElementById("diverror").style.display = "none";
+    document.getElementById("diverror2").style.display = "none";
+    document.getElementById("divok").style.display = "flex";
   }
 }
 
+async function createDeleteRequest(data){
+  const r1 = new Requester();
+  let rest = await r1.postRequest({
+    email: data.email,
+    password: data.password,
+    deletemsg: data.deletemsg
+  },"http://localhost:3002/users/delete");
+  if(rest.res == 1){ //email/password incorrecta
+    document.getElementById("diverror").style.display = "flex";
+    document.getElementById("diverror2").style.display = "none";
+    document.getElementById("divok").style.display = "none";
+  }else if(rest.res == 2){ //deletemsg equivocada
+    document.getElementById("diverror2").style.display = "flex";
+    document.getElementById("diverror").style.display = "none";
+    document.getElementById("divok").style.display = "none";
+  }else{ //correcto
+    document.getElementById("diverror2").style.display = "none";
+    document.getElementById("diverror").style.display = "none";
+    document.getElementById("divok").style.display = "flex";
+  }
+}
 /**
  * Renders the books data on a table in the HTML document.
  *

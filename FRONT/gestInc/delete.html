@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./components/Requester.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Delete user</title>
+</head>
+<body>
+    <h1>Borrar usuario</h1>
+    <div id="diverror">
+        <p>Error: el correo/contraseña no es correcto.</p>
+    </div>
+    <div id="diverror2">
+        <p>Error: "delete account" no se ha escrito correctamente.</p>
+    </div>
+    <div id="divok">
+        <p>El usuario ha sido eliminado con éxito.</p>
+    </div>
+    <input type="email" placeholder="Email" id="email"> <br>
+    <input type="password" placeholder="Password" id="password"><br>
+    <input type="text" placeholder="Type 'delete account'" id="deletemsg"> <br>
+    <button onclick="createDeleteRequest({
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        deletemsg: document.getElementById('deletemsg').value
+        })">Delete account</button> <br>
+    <p><a href="login.html">Iniciar sesión</a></p>
+    <script src="./js/main.js"></script>
+</body>
+</html>

@@ -67,6 +67,9 @@ class Requester {
         body: JSON.stringify({
           email: data.email,
           password: data.password,
+          password1: data.password1,
+          password2: data.password2,
+          deletemsg: data.deletemsg
         }), // body data type must match "Content-Type" header
       });
       const resp = await response.json();
