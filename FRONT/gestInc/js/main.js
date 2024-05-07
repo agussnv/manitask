@@ -34,7 +34,36 @@ async function createRegisterRequest(data) {
     document.getElementById("divok").style.display = "none";
   }else{
     document.getElementById("diverror").style.display = "none";
+    //location.href = "login.html"; --> redirigir a otra página
     document.getElementById("divok").style.display = "flex";
+  }
+}
+
+async function createLoginRequest(data){
+  const r1 = new Requester();
+  let rest = await r1.postRequest({
+    email: data.email,
+    password: data.password
+  },"http://localhost:3002/users/login");
+  if(rest.res == 1){
+    document.getElementById("diverror").style.display = "flex";
+  }else{
+    alert("correctoo");
+    document.getElementById("diverror").style.display = "none";
+  }
+}
+
+async function createResetPasswordRequest(data){
+  const r1 = new Requester();
+  let rest = await r1.postRequest({
+    email: data.email,
+    password: data.password
+  },"http://localhost:3002/users/login");
+  if(rest.res == 1){
+    document.getElementById("diverror").style.display = "flex";
+  }else{
+    alert("correctoo");
+    document.getElementById("diverror").style.display = "none";
   }
 }
 

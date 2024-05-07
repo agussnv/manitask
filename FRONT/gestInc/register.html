@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./components/Requester.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Registrarse</title>
 </head>
 <body>
     <h1>Register</h1>
@@ -15,9 +15,10 @@
     <div id="divok">
         <p>Usuari creat. <a href="#">Iniciar sesión</a></p>
     </div>
-    <input type="text" placeholder="Email" id="email">
-    <input type="text" placeholder="Password" id="password">
+    <input type="email" placeholder="Email" id="email">
+    <input type="password" placeholder="Password" id="password">
     <button onclick="createRegisterRequest({email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
+    <p><a href="login.html">Iniciar sesión</a></p>
     <script src="./js/main.js"></script>
 </body>
 </html>

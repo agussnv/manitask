@@ -21,11 +21,16 @@ router.post('/login', async function(req, res, next) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    const response = await client;
-    // Send a ping to confirm a successful connection
-    await client.db("gestInc").collection("test_js").findOne({email: req.query.email});
+    const userExist = await client
+    .db("gestInc")
+    .collection("test_js")
+    .findOne({email: req.body.email, password: req.body.password});
     console.log((data) => res.json(data));
-    res.send("correcto chavalin")
+    if(!userExist){
+      res.send(JSON.stringify({res: 1}))
+    }else{
+      res.send(JSON.stringify({res: 0}))
+    }
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
