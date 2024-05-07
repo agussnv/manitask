@@ -27,8 +27,15 @@ async function createRegisterRequest(data) {
   let rest = await r1.postRequest(
     {email: data.email,password: data.password},
     "http://localhost:3002/users/register");
-  if(rest.res == "pepe")
-    alert("benjamin");
+  const errormessage = document.getElementById('diverror');
+  if(rest.res == 1){
+    console.log("entra");
+    document.getElementById("diverror").style.display = "flex";
+    document.getElementById("divok").style.display = "none";
+  }else{
+    document.getElementById("diverror").style.display = "none";
+    document.getElementById("divok").style.display = "flex";
+  }
 }
 
 /**

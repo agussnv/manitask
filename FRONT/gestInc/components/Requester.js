@@ -69,6 +69,8 @@ class Requester {
           password: data.password,
         }), // body data type must match "Content-Type" header
       });
+      const resp = await response.json();
+      return resp;
     } catch (error) {
       throw error;
     }

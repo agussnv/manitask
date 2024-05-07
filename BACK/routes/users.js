@@ -33,10 +33,10 @@ router.post('/login', async function(req, res, next) {
 });
 
 router.post('/register', async function(req, res, next) {
+  
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-    console.log("concha");
     const userExist = await client
     .db("gestInc")
     .collection("test_js")
@@ -44,9 +44,9 @@ router.post('/register', async function(req, res, next) {
     console.log(userExist);
     if(!userExist){
       const result = await client.db("gestInc").collection("test_js").insertOne({email: req.body.email,password: req.body.password});
-      console.log(result);
+      res.send(JSON.stringify({res: 0}));
     }else{
-      res.send(JSON.stringify({res: "pepe"}));
+      res.send(JSON.stringify({res: 1}));
     }
     /*const deletear = await client.db("gestInc").collection("test_js").deleteMany({ texto: 'hola mundo' });
     console.log(deletear);
@@ -54,7 +54,6 @@ router.post('/register', async function(req, res, next) {
     console.log(updatear);
     const trobar = await client.db("gestInc").collection("test_js").findOne({email: "agustin@gmail.com"});
     console.log(trobar);*/
-    res.send("correcto chavalin")
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();

@@ -1,0 +1,19 @@
+#diverror{
+    height: 30px;
+    background-color: rgb(255, 143, 143);
+    border: 1px solid rgb(253, 104, 104);
+    display: none;
+    align-items: center;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+#divok{
+    height: 30px;
+    background-color: rgb(175, 255, 159);
+    border: 1px solid rgb(80, 214, 80);
+    display: none;
+    align-items: center;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
