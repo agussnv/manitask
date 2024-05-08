@@ -115,22 +115,22 @@ router.post('/delete', async function(req, res, next) {
   }
 });
 
-router.post('/print', async function(req, res, next) {
+router.post('/getusers', async function(req, res, next) {
   try {
     await client.connect();
-    const userExist = await client
+    const users = await client
     .db("gestInc")
     .collection("test_js")
-    .findOne({email: req.body.email});
-    console.log(userExist);
-    if(!userExist){
+    .find().toArray();
+    console.log(users);
+    res.send(res.JSON.stringify(users));
+    /*if(!userExist){
       const result = await client.db("gestInc").collection("test_js").insertOne({email: req.body.email,password: req.body.password});
       res.send(JSON.stringify({res: 0}));
     }else{
       res.send(JSON.stringify({res: 1}));
-    }
+    }*/
   } finally {
-    // Ensures that the client will close when you finish/error
     await client.close();
   }
 });

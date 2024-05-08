@@ -9,9 +9,7 @@
   </head>
   <body>
     <div id="root" style="justify-content: center; display: flex">
-      <table
-        style="border: solid 1px black; padding: 5px; align-content: center"
-      >
+      <table style="border: solid 1px black; padding: 5px; align-content: center">
         <thead style="border: solid 1px black">
           <th style="padding: 10px">ID</th>
           <th style="padding: 10px">UserID</th>
@@ -21,12 +19,6 @@
         <tbody id="tableBody" style="text-align: center"></tbody>
       </table>
     </div>
-    <input type="email" name="email" id="email" />
-      <input type="text" name="texto" id="texto" />
-      <button
-        type="button"
-        onclick="createRegisterRequest({email: document.getElementById('email').value, texto: document.getElementById('texto').value})"
-      >Enviar</button>
     <script>
       createReq();
     </script>
