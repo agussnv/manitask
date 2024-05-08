@@ -13,10 +13,10 @@ const client = new MongoClient(uri, {
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send("'respond with a resource'");
+res.send("'respond with a resource'");
 });
-
 /* GET users listing. */
+
 router.post('/login', async function(req, res, next) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -118,18 +118,21 @@ router.post('/delete', async function(req, res, next) {
 router.post('/getusers', async function(req, res, next) {
   try {
     await client.connect();
-    const users = await client
-    .db("gestInc")
-    .collection("test_js")
-    .find().toArray();
-    console.log(users);
-    res.send(res.JSON.stringify(users));
-    /*if(!userExist){
-      const result = await client.db("gestInc").collection("test_js").insertOne({email: req.body.email,password: req.body.password});
-      res.send(JSON.stringify({res: 0}));
-    }else{
-      res.send(JSON.stringify({res: 1}));
-    }*/
+    try{
+      const users = await client
+      .db("gestInc")
+      .collection("test_js")
+      .find().toArray();
+      console.log(users);
+      res.send({res: JSON.stringify(users)});
+      if(!users){
+        res.send(JSON.stringify({res: 0}));
+      }else{
+        res.send(JSON.stringify({res: 1}));
+      }
+    }catch (error){
+      console.log(error);
+    }
   } finally {
     await client.close();
   }

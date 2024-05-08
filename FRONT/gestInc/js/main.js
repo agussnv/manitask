@@ -3,7 +3,7 @@
  *
  * @return {Promise<void>} A Promise that resolves when the table is successfully rendered, or rejects with an error message.
  */
-async function createReq() {
+/*async function createReq() {
   const r1 = new Requester();
    const tableBody = document.getElementById("tableBody");
   try {
@@ -20,6 +20,20 @@ async function createReq() {
     p.style.cssText = "color: red; font-size: 20px; font-weight: bold;";
     tableBody.appendChild(p);
   }
+}*/
+
+async function createGetUsersRequest(){
+  const r1 = new Requester();
+  const tableBody = document.getElementById("tablebody");
+  
+  let req = await r1.postRequest({},"http://localhost:3005/users/getusers");
+  let res = JSON.parse(req.res);
+  drawOnTable(res);
+  if(req.res == 1){
+    document.getElementById("diverror").style.display = "flex";
+  }else{
+    document.getElementById("diverror").style.display = "none";
+  }
 }
 
 /**
@@ -27,68 +41,30 @@ async function createReq() {
  *
  * @param {Array} books - An array of book objects to be displayed on the table
  */
- function drawOnTable(books) {
+ function drawOnTable(res) {
    const tableBody = document.getElementById("tableBody");
    tableBody.innerHTML = "";
-   books.forEach((book) => {
+   res.forEach(element => {
      const r = document.createElement("tr");
      const c1 = document.createElement("td");
      const c2 = document.createElement("td");
      const c3 = document.createElement("td");
-     const c4 = document.createElement("td");
-     c1.innerHTML = book.id;
-     c2.innerHTML = book.userId;
-     c3.innerHTML = book.title;
-     if (book.completed) {
-       c4.style.backgroundColor = "lightgreen";
-     } else {
-       c4.style.backgroundColor = "red";
-     }
-
-     c2.onclick = () => {
-       let userId = prompt("Enter new user ID");
-       userId != null ? (book.userId = userId) : "";
-       c2.innerHTML = book.userId;
-     };
-     c3.onclick = () => {
-       let newTitle = prompt("Enter new title");
-       book.title = newTitle;
-       c3.innerHTML = book.title;
-     };
-     c4.onclick = () => {
-       if (book.completed) {
-         c4.style.backgroundColor = "red";
-       } else {
-         c4.style.backgroundColor = "lightgreen";
-       }
-       book.completed = !book.completed;
-       console.log(book);
-     };
+     c1.innerHTML = element._id;
+     c2.innerHTML = element.email;
+     c3.innerHTML = element.password;
      r.appendChild(c1);
      r.appendChild(c2);
      r.appendChild(c3);
-     r.appendChild(c4);
      tableBody.appendChild(r);
-   });
+    });
   }
 
-async function createGetUsersRequest(){
-  const r1 = new Requester();
-  let rest = await r1.postRequest({},"http://localhost:3003/users/getusers");
-  let lista = JSON.parse(rest.res);
-  if(rest.res == 1){
-    document.getElementById("diverror").style.display = "flex";
-  }else{
-    alert("OK");
-    document.getElementById("diverror").style.display = "none";
-  }
-}
 
 async function createRegisterRequest(data) {
   const r1 = new Requester();
   let rest = await r1.postRequest(
     {email: data.email,password: data.password},
-    "http://localhost:3003/users/register");
+    "http://localhost:3005/users/register");
   const errormessage = document.getElementById('diverror');
   if(rest.res == 1){
     console.log("entra");
@@ -106,11 +82,11 @@ async function createLoginRequest(data){
   let rest = await r1.postRequest({
     email: data.email,
     password: data.password
-  },"http://localhost:3003/users/login");
+  },"http://localhost:3005/users/login");
   if(rest.res == 1){
     document.getElementById("diverror").style.display = "flex";
   }else{
-    alert("correctoo");
+    alert("OK!");
     document.getElementById("diverror").style.display = "none";
   }
 }
@@ -121,9 +97,9 @@ async function createResetPasswordRequest(data){
     email: data.email,
     password1: data.password1,
     password2: data.password2
-  },"http://localhost:3003/users/reset");
+  },"http://localhost:3005/users/reset");
   if(rest.res == 1){
-    document.getElementById("diverror").style.display = "flex";
+  document.getElementById("diverror").style.display = "flex";
     document.getElementById("diverror2").style.display = "none";
   }else if(rest.res == 2){
     document.getElementById("diverror2").style.display = "flex";
@@ -141,7 +117,7 @@ async function createDeleteRequest(data){
     email: data.email,
     password: data.password,
     deletemsg: data.deletemsg
-  },"http://localhost:3003/users/delete");
+  },"http://localhost:3005/users/delete");
   if(rest.res == 1){ //email/password incorrecta
     document.getElementById("diverror").style.display = "flex";
     document.getElementById("diverror2").style.display = "none";

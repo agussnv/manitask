@@ -13,9 +13,19 @@
     <div id="diverror">
         <p>No hay ningun usuario registrado.</p>
     </div>
+    <div id="root" style="justify-content: center; display: flex">
+        <table style="border: solid 1px black; padding: 5px; align-content: center">
+            <thead style="border: solid 1px black">
+                <th style="padding: 10px">ID</th>
+            <th style="padding: 10px">Email</th>
+            <th style="padding: 10px">Password</th>
+          </thead>
+          <tbody id="tableBody" style="text-align: center"></tbody>
+        </table>
+    </div>
     <script>
         createGetUsersRequest();
-    </script>
+        </script>
     <p><a href="login.html">Iniciar sesión</a></p>
 </body>
 </html>
