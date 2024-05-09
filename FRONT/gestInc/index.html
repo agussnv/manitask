@@ -3,24 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <script src="./components/Requester.js"></script>
     <script src="./js/main.js"></script>
     <title>Document</title>
   </head>
   <body>
-    <div id="root" style="justify-content: center; display: flex">
-      <table style="border: solid 1px black; padding: 5px; align-content: center">
-        <thead style="border: solid 1px black">
-          <th style="padding: 10px">ID</th>
-          <th style="padding: 10px">UserID</th>
-          <th style="padding: 10px">Title</th>
-          <th style="padding: 10px">Completed</th>
-        </thead>
-        <tbody id="tableBody" style="text-align: center"></tbody>
-      </table>
-    </div>
-    <script>
-      createReq();
-    </script>
+    <header>
+      <nav>
+        <p id="marca">Gestión de incidencias</p>
+        <ul>
+          <li><a href="register.html" class="nolink radius boton">Sign up</a></li>
+          <li><a href="login.html" class="nolink radius boton">Log in</a></li>
+        </ul>
+      </nav>
+    </header>
   </body>
 </html>

@@ -27,8 +27,8 @@ async function createGetUsersRequest(){
   const tableBody = document.getElementById("tablebody");
   
   let req = await r1.postRequest({},"http://localhost:3005/users/getusers");
-  let res = JSON.parse(req.res);
-  drawOnTable(res);
+  console.log(req)
+  drawOnTable(req.users);
   if(req.res == 1){
     document.getElementById("diverror").style.display = "flex";
   }else{
@@ -42,19 +42,17 @@ async function createGetUsersRequest(){
  * @param {Array} books - An array of book objects to be displayed on the table
  */
  function drawOnTable(res) {
+  console.log(res)
    const tableBody = document.getElementById("tableBody");
    tableBody.innerHTML = "";
-   res.forEach(element => {
+   res.forEach((element) => {
      const r = document.createElement("tr");
      const c1 = document.createElement("td");
      const c2 = document.createElement("td");
-     const c3 = document.createElement("td");
-     c1.innerHTML = element._id;
-     c2.innerHTML = element.email;
-     c3.innerHTML = element.password;
+     c1.innerHTML = element.email;
+     c2.innerHTML = element.password;
      r.appendChild(c1);
      r.appendChild(c2);
-     r.appendChild(c3);
      tableBody.appendChild(r);
     });
   }
@@ -67,7 +65,6 @@ async function createRegisterRequest(data) {
     "http://localhost:3005/users/register");
   const errormessage = document.getElementById('diverror');
   if(rest.res == 1){
-    console.log("entra");
     document.getElementById("diverror").style.display = "flex";
     document.getElementById("divok").style.display = "none";
   }else{

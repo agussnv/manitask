@@ -8,17 +8,28 @@
     <title>Registrarse</title>
 </head>
 <body>
-    <h1>Register</h1>
-    <div id="diverror">
-        <p>Error: el nombre de usuario ya existe. <a href="login.html">Iniciar sesión</a></p>
+    <header>
+        <nav>
+          <p id="marca">Gestión de incidencias</p>
+          <ul>
+            <li><a href="register.html" class="nolink radius boton">Sign up</a></li>
+            <li><a href="login.html" class="nolink radius boton">Log in</a></li>
+          </ul>
+        </nav>
+      </header>
+    <div>
+        <h1>Register</h1>
+        <div id="diverror">
+            <p>Error: el nombre de usuario ya existe. <a href="login.html">Iniciar sesión</a></p>
+        </div>
+        <div id="divok">
+            <p>Usuari creat. <a href="login.html">Iniciar sesión</a></p>
+        </div>
+        <input type="email" placeholder="Email" id="email">
+        <input type="password" placeholder="Password" id="password">
+        <button onclick="createRegisterRequest({email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
+        <p><a href="login.html">Iniciar sesión</a></p>
     </div>
-    <div id="divok">
-        <p>Usuari creat. <a href="login.html">Iniciar sesión</a></p>
-    </div>
-    <input type="email" placeholder="Email" id="email">
-    <input type="password" placeholder="Password" id="password">
-    <button onclick="createRegisterRequest({email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
-    <p><a href="login.html">Iniciar sesión</a></p>
     <script src="./js/main.js"></script>
 </body>
 </html>

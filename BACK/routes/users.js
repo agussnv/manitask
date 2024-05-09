@@ -124,11 +124,10 @@ router.post('/getusers', async function(req, res, next) {
       .collection("test_js")
       .find().toArray();
       console.log(users);
-      res.send({res: JSON.stringify(users)});
-      if(!users){
-        res.send(JSON.stringify({res: 0}));
+      if(users.length > 0){
+        res.send(JSON.stringify({res: 0, users: users}));
       }else{
-        res.send(JSON.stringify({res: 1}));
+        res.send(JSON.stringify({res: 1, users: users}));
       }
     }catch (error){
       console.log(error);

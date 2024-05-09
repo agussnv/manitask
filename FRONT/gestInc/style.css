@@ -1,3 +1,8 @@
+body{
+    margin: 0;
+    background-color: rgb(253, 246, 236);
+}
+
 #diverror{
     height: 30px;
     background-color: rgb(255, 143, 143);
@@ -26,4 +31,49 @@
     align-items: center;
     padding-left: 20px;
     margin-bottom: 20px;
+}
+
+header{
+}
+
+nav{
+    padding-left: 100px;
+    padding-right: 100px;
+    background-color: rgb(255, 230, 148);
+    height: 85px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid burlywood;
+}
+
+ul{
+    display: flex;
+    list-style: none;
+}
+
+ul li{
+    margin-left: 20px;
+}
+
+#marca{
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.boton{
+    background-color: antiquewhite;
+    padding: 12px 20px 12px 20px;
+    font-size: 18px;
+    border: 2px solid brown;
+    border-radius: 30px;
+}
+
+.nolink{
+    text-decoration: none;
+    color: black;
+}
+
+.radius{
+    border-radius: 30px;
 }
