@@ -17,19 +17,23 @@
           </ul>
         </nav>
       </header>
-    <div>
-        <h1>Register</h1>
-        <div id="diverror">
-            <p>Error: el nombre de usuario ya existe. <a href="login.html">Iniciar sesión</a></p>
+    <section class="contenedor">
+        <div class="recuadro">
+            <h1 style="text-align: center;">Register</h1>
+            <div id="diverror">
+                <p>El nombre de usuario ya existe. <a href="login.html">Iniciar sesión</a></p>
+            </div>
+            <div id="divok">
+                <p>Usuari creat. <a href="login.html">Iniciar sesión</a></p>
+            </div>
+            <div class="inputs">
+                <input type="email" placeholder="Email" id="email">
+                <input type="password" placeholder="Password" id="password">
+                <button onclick="createRegisterRequest({email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
+            </div>
+            <p><a href="login.html">Iniciar sesión</a></p>
         </div>
-        <div id="divok">
-            <p>Usuari creat. <a href="login.html">Iniciar sesión</a></p>
-        </div>
-        <input type="email" placeholder="Email" id="email">
-        <input type="password" placeholder="Password" id="password">
-        <button onclick="createRegisterRequest({email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
-        <p><a href="login.html">Iniciar sesión</a></p>
-    </div>
+    </section>
     <script src="./js/main.js"></script>
 </body>
 </html>

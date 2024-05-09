@@ -26,7 +26,7 @@ async function createGetUsersRequest(){
   const r1 = new Requester();
   const tableBody = document.getElementById("tablebody");
   
-  let req = await r1.postRequest({},"http://localhost:3005/users/getusers");
+  let req = await r1.postRequest({},"http://localhost:3006/users/getusers");
   console.log(req)
   drawOnTable(req.users);
   if(req.res == 1){
@@ -62,7 +62,7 @@ async function createRegisterRequest(data) {
   const r1 = new Requester();
   let rest = await r1.postRequest(
     {email: data.email,password: data.password},
-    "http://localhost:3005/users/register");
+    "http://localhost:3006/users/register");
   const errormessage = document.getElementById('diverror');
   if(rest.res == 1){
     document.getElementById("diverror").style.display = "flex";
@@ -79,7 +79,7 @@ async function createLoginRequest(data){
   let rest = await r1.postRequest({
     email: data.email,
     password: data.password
-  },"http://localhost:3005/users/login");
+  },"http://localhost:3006/users/login");
   if(rest.res == 1){
     document.getElementById("diverror").style.display = "flex";
   }else{
@@ -94,7 +94,7 @@ async function createResetPasswordRequest(data){
     email: data.email,
     password1: data.password1,
     password2: data.password2
-  },"http://localhost:3005/users/reset");
+  },"http://localhost:3006/users/reset");
   if(rest.res == 1){
   document.getElementById("diverror").style.display = "flex";
     document.getElementById("diverror2").style.display = "none";
@@ -114,7 +114,7 @@ async function createDeleteRequest(data){
     email: data.email,
     password: data.password,
     deletemsg: data.deletemsg
-  },"http://localhost:3005/users/delete");
+  },"http://localhost:3006/users/delete");
   if(rest.res == 1){ //email/password incorrecta
     document.getElementById("diverror").style.display = "flex";
     document.getElementById("diverror2").style.display = "none";
