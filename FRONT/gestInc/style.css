@@ -4,32 +4,34 @@ body{
 }
 
 #diverror{
-    height: 30px;
     background-color: rgb(255, 143, 143);
     border: 1px solid rgb(253, 104, 104);
     display: none;
-    width: 100%;
+    justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
+    height: 30px;
 }
 
 #diverror2{
     height: 30px;
     background-color: rgb(255, 143, 143);
     border: 1px solid rgb(253, 104, 104);
-    display: none;
+    display: flex;
     align-items: center;
     margin-bottom: 20px;
 }
 
 #divok{
-    height: 30px;
     background-color: rgb(175, 255, 159);
     border: 1px solid rgb(80, 214, 80);
     display: none;
+    justify-content: center;
     align-items: center;
-    padding-left: 20px;
     margin-bottom: 20px;
+    width: 100%;
+    height: 30px;
 }
 
 nav{
@@ -60,7 +62,7 @@ ul li{
 
 .boton{
     background-color: antiquewhite;
-    padding: 12px 20px 12px 20px;
+    padding: 12px 20px;
     font-size: 18px;
     border: 2px solid brown;
     border-radius: 30px;
@@ -78,25 +80,53 @@ ul li{
 .contenedor{
     display: flex;
     justify-content: center;
+    width: 70%;
 }
 
 .recuadro{
     background-color: white;
     border: 1px solid burlywood;
     border-radius: 20px;
-    width: 300px;
-    padding: 100px;
+    width: 350px;
+    padding: 30px 50px;
+}
+
+.tcenter{
+    text-align: center;
 }
 
 .inputs{
-    width: 100%;
+    text-align: center;
 }
 
 input{
-    display: block;
+    display: inline-block;
     font-size: 16px;
     text-align: center;
     margin-bottom: 20px;
     width: 100%;
     height: 50px;
+}
+
+.botonaction{
+    background-color: bisque;
+    border: 2px solid burlywood;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+.botonaction:hover{
+    background-color: rgb(255, 213, 161);
+    cursor: pointer;
+}
+
+#mainpage{
+    display: flex;
+    width: 100%;
+}
+
+#presentacion{
+    width: 40%;
+    text-align: center;
+    margin-left: 100px;
 }
