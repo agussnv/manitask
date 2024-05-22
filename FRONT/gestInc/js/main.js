@@ -123,10 +123,12 @@ async function login(){
 }
 
 async function logout(){
-  let rest = await requester.loginRequest({
-    email: email,
-    password: pass
-  },"http://localhost:3006/users/login");
+  document.cookie = "id=; max-age=0";
+  document.cookie = "username=; max-age=0";
+  let requester = new Requester();
+  let rest = await requester.logoutRequest({},"http://localhost:3006/users/logout");
+  console.log(rest.res);
+  location.href='login.html';
 }
 
 function getCookie(cname) {

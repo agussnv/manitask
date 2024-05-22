@@ -64,8 +64,19 @@ router.post('/login', async function(req, res, next) {
 //Logout
 //Destruye la sesión.
 router.post('/logout', function (req, res) {
-  req.session.destroy();
-  res.send("logout success!");
+  if (req.session.loggedIn) {
+    req.session.destroy(function(err) {
+      if (err) {
+        console.error("Session destruction error:", err);
+        res.status(500).send(JSON.stringify({ res: "log out failed" }));
+      } else {
+        console.log("Sesión destruida");
+        res.send(JSON.stringify({ res: "log out success" }));
+      }
+    });
+  } else {
+    res.send(JSON.stringify({ res: "No existe ninguna sesión" }));
+  }
 });
 
 /*router.post('/user', async function(req, res, next) {
