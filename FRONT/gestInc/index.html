@@ -29,16 +29,18 @@
       </div>
       <div class="contenedor">
           <div class="recuadro">
+            <!--Todas las advertencias/avisos que pueden llegar a salir al crear un usuario-->
               <h1 class="tcenter">Create an account</h1>
               <p class="tcenter">Already have an account? <a href="login.html">Sign in</a></p>
               <p id="diverror">Email is already in use</p>
-              <p id="diverror">Username is already in use</p>
+              <p id="diverror2">Username is already in use</p>
               <p id="divok">Account has been created</p>
               <div class="inputs">
-                <input type="text" placeholder="Username(not working)" id="">
+                <input type="text" placeholder="Username" id="username">
                 <input type="email" placeholder="Email" id="email">
                 <input type="password" placeholder="Password" id="password"> <br>
-                <button class="botonaction" onclick="createRegisterRequest({email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
+                <!--Hacemos una llamada a la función createRegisterRequest() envíandole por parámetro los valores de los inputs-->
+                <button class="botonaction" onclick="createRegisterRequest({username: document.getElementById('username').value, email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
               </div>
           </div>
         </div>

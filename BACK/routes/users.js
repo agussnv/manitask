@@ -17,43 +17,105 @@ res.send("'respond with a resource'");
 });
 /* GET users listing. */
 
-router.post('/login', async function(req, res, next) {
+//cambiar a get
+/*router.post('/login', async function(req, res, next) {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+    //buscamos un usuario que coincida el correo con la contraseña introducidos, en caso de encontrar coincidencia, retorna 1, en caso de que no, retorna 0
     const userExist = await client
     .db("gestInc")
     .collection("test_js")
     .findOne({email: req.body.email, password: req.body.password});
-    console.log((data) => res.json(data));
     if(!userExist){
       res.send(JSON.stringify({res: 1}))
     }else{
-      res.send(JSON.stringify({res: 0}))
+      console.log("UserJSON REGISTROS:");
+      console.log(userExist);
+      req.session.loggedIn = userExist._id;
+      res.send(JSON.stringify({res: 0, user: req.session.loggedIn}));
     }
   } finally {
-    // Ensures that the client will close when you finish/error
+    //Cerramos la comunicación con el cliente
+    await client.close();
+  }
+});*/
+
+router.post('/login', async function(req, res, next) {
+  try {
+    await client.connect();
+    //buscamos un usuario que coincida el correo con la contraseña introducidos, en caso de encontrar coincidencia, retorna 1, en caso de que no, retorna 0
+    const userExist = await client
+    .db("gestInc")
+    .collection("test_js")
+    .findOne({email: req.body.email, password: req.body.password});
+    if(userExist){
+      req.session.loggedIn = userExist._id;
+      req.session.user = userExist.username;
+      res.send(JSON.stringify({res: 0, name: req.session.user, user: req.session.loggedIn}));
+    }else{
+      res.send(JSON.stringify({res: 1}))
+    }
+  } finally {
+    //Cerramos la comunicación con el cliente
     await client.close();
   }
 });
 
-router.post('/register', async function(req, res, next) {
+//Logout
+//Destruye la sesión.
+router.post('/logout', function (req, res) {
+  req.session.destroy();
+  res.send("logout success!");
+});
+
+/*router.post('/user', async function(req, res, next) {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+    //buscamos un usuario que coincida el correo con la contraseña introducidos, en caso de encontrar coincidencia, retorna 1, en caso de que no, retorna 0
     const userExist = await client
     .db("gestInc")
     .collection("test_js")
-    .findOne({email: req.body.email});
-    console.log(userExist);
+    .findOne({_id: req});
     if(!userExist){
-      const result = await client.db("gestInc").collection("test_js").insertOne({email: req.body.email,password: req.body.password});
-      res.send(JSON.stringify({res: 0}));
+      res.send(JSON.stringify({res: 1}))
     }else{
-      res.send(JSON.stringify({res: 1}));
+      console.log("---- UserJSON Información ----");
+      console.log(userExist);
+      req.session.loggedIn = userExist;
+      res.send(JSON.stringify({res: 0, user: req.session.loggedIn}));
     }
   } finally {
-    // Ensures that the client will close when you finish/error
+    //Cerramos la comunicación con el cliente
+    await client.close();
+  }
+});*/
+
+router.post('/register', async function(req, res, next) {
+  try {
+    //Conectamos con el cliente
+    await client.connect();
+    //Buscamos dentro de la colección "test_js" que se encuentra dentro de la base de datos "gestInc" un usuario con el valor del input 'username'
+    const userExist = await client
+    .db("gestInc")
+    .collection("test_js")
+    .findOne({username: req.body.username});
+    //Lo mismo en el anterior, pero en otra variable diferente
+    const emailExist = await client
+    .db("gestInc")
+    .collection("test_js")
+    .findOne({email: req.body.email});
+    /*En caso que no exista ni usuario ni email identicos a los introducidos, se creará un usuario con los valores de los inputs enviados
+    y en caso de que exista uno u otro, devolvera 1 o 2 dependiendo del tipo de error*/
+    if(!userExist && !emailExist){
+      const result = await client.db("gestInc").collection("test_js").insertOne({username: req.body.username, email: req.body.email,password: req.body.password});
+      res.send(JSON.stringify({res: 0}));
+    }else if(emailExist){
+      res.send(JSON.stringify({res: 1}));
+    }else if(userExist){
+      res.send(JSON.stringify({res: 2}));
+    }
+  } finally {
+    //Nos aseguramos que pase lo que pase, se cierre la conexión con el cliente
     await client.close();
   }
 });
@@ -96,9 +158,13 @@ router.post('/delete', async function(req, res, next) {
     .collection("test_js")
     .findOne({email: req.body.email, password: req.body.password});
     console.log((data) => res.json(data));
+    /*guardamos la nueva contraseña en una constante y en caso de que el input en 'deletemsg'
+    sea igual a "delete account", se guardará un true dentro de la constante 'ok'*/
     const contrasena = req.body.password1;
-    console.log(contrasena);
     const ok = req.body.deletemsg == "delete account";
+    /*si el usuario no existe, retorna 1. si 'deletemsg' no es igual a "delete account", retorna 2.
+    En caso de que no se cumpla ninguna de estas condiciones retorna 0 y se eliminan los usuarios
+    que encuentre con el email del input*/
     if(!userExist){
       res.send(JSON.stringify({res: 1}))
     }else if(!ok){
@@ -117,13 +183,17 @@ router.post('/delete', async function(req, res, next) {
 
 router.post('/getusers', async function(req, res, next) {
   try {
+    //esperamos a que se conecte con el cliente
     await client.connect();
     try{
+      //con .find sin parámetro, nos retorna todos los elementos dentro de la colección
       const users = await client
       .db("gestInc")
       .collection("test_js")
       .find().toArray();
       console.log(users);
+      /*en caso de que users sea mayor a 0, significa que hay al menos 1 usuario
+      y enviamos tanto 0 o 1 dependiendo el caso y los usuarios*/
       if(users.length > 0){
         res.send(JSON.stringify({res: 0, users: users}));
       }else{

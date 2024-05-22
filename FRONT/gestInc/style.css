@@ -15,12 +15,14 @@ body{
 }
 
 #diverror2{
-    height: 30px;
     background-color: rgb(255, 143, 143);
     border: 1px solid rgb(253, 104, 104);
-    display: flex;
+    display: none;
+    justify-content: center;
     align-items: center;
     margin-bottom: 20px;
+    width: 100%;
+    height: 30px;
 }
 
 #divok{
@@ -35,8 +37,8 @@ body{
 }
 
 nav{
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
     background-color: rgb(255, 230, 148);
     height: 85px;
     display: flex;
@@ -99,7 +101,7 @@ ul li{
     text-align: center;
 }
 
-input{
+.inputs *{
     display: inline-block;
     font-size: 16px;
     text-align: center;
@@ -129,4 +131,39 @@ input{
     width: 40%;
     text-align: center;
     margin-left: 100px;
+}
+
+#search{
+    width: 400px;
+    height: 40px;
+    border: 1px solid rgb(63, 63, 63);
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+}
+
+#botonsearch{
+    background: none;
+    border: none;
+}
+
+#botonsearch img{
+    height: 20px;
+    padding-right: 8px;
+    cursor: pointer;
+}
+
+.camposearch{
+    width: 80%;
+    margin-left: 10px;
+    border: none;
+    background: none;
+    font-size: 20px;
+}
+
+.camposearch:focus{
+    border: none;
+    outline: none;
 }

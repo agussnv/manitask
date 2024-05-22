@@ -48,6 +48,7 @@ class Requester {
     if (url) {
       this.httpRequest = url;
     } else {
+      //En caso que le pasemos una url, la mostrará por consola, de caso contrario imprimirá el error
       if (this.httpRequest.length > 0) {
         console.log(this.httpRequest);
       } else {
@@ -64,8 +65,10 @@ class Requester {
           "Content-Type": "application/json",
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
+        //Todas las variables que le pasaremos a lo largo del desarrollo para las diferentes funcionalidades
         body: JSON.stringify({
           email: data.email,
+          username: data.username,
           password: data.password,
           password1: data.password1,
           password2: data.password2,
@@ -78,4 +81,71 @@ class Requester {
       throw error;
     }
   }
+
+  async loginRequest(data, url = null) {
+    if (url) {
+      this.httpRequest = url;
+    } else {
+      //En caso que le pasemos una url, la mostrará por consola, de caso contrario imprimirá el error
+      if (this.httpRequest.length > 0) {
+        console.log(this.httpRequest);
+      } else {
+        console.log("No url provided on httpRequest");
+        throw "No url provided on httpRequest";
+      }
+    }
+
+    try {
+      const response = await fetch(this.httpRequest, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        //Todas las variables que le pasaremos a lo largo del desarrollo para las diferentes funcionalidades
+        body: JSON.stringify({
+          email: data.email,
+          password: data.password
+        }), // body data type must match "Content-Type" header
+      });
+      const resp = await response.json();
+      return resp;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+ /* async loginRequest(data, url = null) {
+    if (url) {
+      this.httpRequest = url;
+    } else {
+      //En caso que le pasemos una url, la mostrará por consola, de caso contrario imprimirá el error
+      if (this.httpRequest.length > 0) {
+        console.log(this.httpRequest);
+      } else {
+        console.log("No url provided on httpRequest");
+        throw "No url provided on httpRequest";
+      }
+    }
+
+    try {
+      const response = await fetch(this.httpRequest, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        //Todas las variables que le pasaremos a lo largo del desarrollo para las diferentes funcionalidades
+        body: JSON.stringify({
+          _id: data._id
+        }), // body data type must match "Content-Type" header
+      });
+      const resp = await response.json();
+      return resp;
+    } catch (error) {
+      throw error;
+    }
+  }*/
 }

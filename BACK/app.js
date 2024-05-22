@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,7 +22,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(
+  session({
+    secret: "contraseñasecreta",
+    cookie: { maxAge: 60000},
+    resave: true,
+    saveUninitialized: true
+  })
+)
 app.use(express.json()); //probar, no se si esta linea es util para algo o no
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
