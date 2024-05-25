@@ -167,3 +167,42 @@ ul li{
     border: none;
     outline: none;
 }
+
+button{
+    cursor: pointer;
+}
+
+.quicksand{
+    font-family: "Quicksand", sans-serif;
+}
+
+#nombre{
+    font-weight: 300;
+    font-size: 100px;
+    text-align: center;
+}
+
+.titulo{
+    font-size: 50px;
+    font-weight: 300;
+}
+
+/* styles.css */
+.fade {
+    opacity: 0; /* Inicialmente invisible */
+    animation: fadeIn 0.5s ease-in forwards; /* Animación */
+}
+
+/* Definición de la animación */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#information{
+    margin: 50px;
+}

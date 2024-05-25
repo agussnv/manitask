@@ -122,58 +122,27 @@ async function login(){
   }
 }
 
-async function logout(){
-  document.cookie = "id=; max-age=0";
-  document.cookie = "username=; max-age=0";
-  let requester = new Requester();
-  let rest = await requester.logoutRequest({},"http://localhost:3006/users/logout");
-  console.log(rest.res);
-  location.href='login.html';
+function drawOnTable(res) {
+  const tableBody = document.getElementById("tableBody");
+  tableBody.innerHTML = "";
+  res.forEach((element) => {
+  //creamos los diferentes elementos donde se mostrará la información
+    const r = document.createElement("tr");
+    const c1 = document.createElement("td");
+    const c2 = document.createElement("td");
+    const c3 = document.createElement("td");
+    /*añadimos al archivo html el username, email y password
+    que conseguimos a través del retorno de la ruta de /getusers*/
+    c1.innerHTML = element.username;
+    c2.innerHTML = element.email;
+    c3.innerHTML = element.password;
+    //y unimos las 3 columnas a la fila 'r'
+    r.appendChild(c1);
+    r.appendChild(c2);
+    r.appendChild(c3);
+    tableBody.appendChild(r);
+  });
 }
-
-function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-
-function welcomeName(){
-  const name = getCookie("username");
-  const original = document.getElementById("nombre").innerHTML;
-  const nom = document.getElementById("nombre").innerHTML = original + name;
-}
-
- function drawOnTable(res) {
-   const tableBody = document.getElementById("tableBody");
-   tableBody.innerHTML = "";
-   res.forEach((element) => {
-    //creamos los diferentes elementos donde se mostrará la información
-     const r = document.createElement("tr");
-     const c1 = document.createElement("td");
-     const c2 = document.createElement("td");
-     const c3 = document.createElement("td");
-     /*añadimos al archivo html el username, email y password
-     que conseguimos a través del retorno de la ruta de /getusers*/
-     c1.innerHTML = element.username;
-     c2.innerHTML = element.email;
-     c3.innerHTML = element.password;
-     //y unimos las 3 columnas a la fila 'r'
-     r.appendChild(c1);
-     r.appendChild(c2);
-     r.appendChild(c3);
-     tableBody.appendChild(r);
-    });
-  }
 
 //FUNCIÓN PARA RECOGER EL REST.USER Y COMPARARLO CON DOCUMENT.COOKIE PERO NO SE COMO AGARRAR EL REST.USER SIN LLAMAR AL LOGIN CADA VEZ QUE QUIERE TESTEARCOOKIES
 /*async function testCookies(){
@@ -248,5 +217,48 @@ async function createDeleteRequest(data){
     document.getElementById("diverror2").style.display = "none";
     document.getElementById("diverror").style.display = "none";
     document.getElementById("divok").style.display = "flex";
+  }
+}
+
+async function logout(){
+  document.cookie = "id=; max-age=0";
+  document.cookie = "username=; max-age=0";
+  let requester = new Requester();
+  let rest = await requester.logoutRequest({},"http://localhost:3006/users/logout");
+  console.log(rest.res);
+  location.href='login.html';
+}
+
+async function autenticar(){
+  let requester = new Requester();
+  let rest = await requester.request({},"http://localhost:3006/users/autenticar");
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function welcomeName(){
+  const name = getCookie("username");
+  const original = document.getElementById("nombre").innerHTML;
+  const nom = document.getElementById("nombre").innerHTML = original + name;
+}
+
+function isLogged(){
+  if(document.cookie){
+    location.href='home.html';
+    alert("Ya existe una sesión abierta")
   }
 }
