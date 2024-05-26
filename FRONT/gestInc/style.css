@@ -38,7 +38,7 @@ body{
 }
 
 header{
-    border-bottom: 1px solid rgb(165, 165, 165);
+    border-bottom: 1px solid #a5a5a5;
 }
 
 nav{
@@ -60,6 +60,10 @@ ul li{
     margin-left: 20px;
 }
 
+ul li a{
+    color: white;
+}
+
 #marca{
     font-size: 40px;
     font-family: "Raleway", sans-serif;
@@ -69,21 +73,22 @@ ul li{
 .botonnav{
     padding: 10px 20px;
     font-size: 15px;
-    background-color: #a7e3ff;
-    border: 1px solid #a7e3ff;
+    background-color: #37b5fd;
+    border: 1px solid #37b5fd;
     border-radius: 10px;
     transition: 0.25s;
+    color: white;
 }
 
 .nolink{
     text-decoration: none;
     font-weight: bold;
-    color: white;
     font-family: "Raleway", sans-serif;
 }
 
 .botonnav:hover{
-    background-color: #37b5fd;
+    background-color: #30a3e6;
+    border-color: #30a3e6;
 }
 
 .nolink:hover{
@@ -97,17 +102,33 @@ ul li{
 .contenedor{
     display: flex;
     justify-content: center;
-    padding: 30px 0;
+    align-items: center;
     width: 50%;
-    background-color: #d6f2ff;
+    background-color: white;
 }
 
 .recuadro{
     background-color: white;
-    border: 1px solid #37b5fd;
     border-radius: 20px;
     width: 350px;
-    padding: 30px 50px;
+}
+
+#indexizquierda{
+    width: 50%;
+    text-align: center;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d6f2ff;
+}
+
+#indexizquierda img{
+    height: 400px;
+}
+
+.ligth{
+    font-weight: 500;
 }
 
 .tcenter{
@@ -115,43 +136,59 @@ ul li{
 }
 
 .inputs{
-    text-align: center;
+    
 }
 
-.inputs *{
+.inputs input{
     display: inline-block;
-    font-size: 16px;
-    text-align: center;
+    font-size: 15px;
+    text-indent: 20px;
+    border: 1q solid #a5a5a5;
     margin-bottom: 20px;
-    width: 100%;
+    width: 98%;
     height: 50px;
+    margin-top: 10px;
+
+    &:focus{
+        outline: none;
+    }
+}
+
+.inputs button{
+    font-family: "Raleway", sans-serif;
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+}
+
+.inputs input::placeholder{
+    font-family: "Raleway", sans-serif;
+}
+
+.inputs label{
+    font-weight: bold;
+    margin-top: 20px;
 }
 
 .botonaction{
-    background-color: bisque;
-    border: 2px solid burlywood;
-    border-radius: 20px;
+    background-color: #37b5fd;
+    border-color: #37b5fd;
+    border: 0px;
+    border-radius: 5px;
     padding: 10px 15px;
+    font-weight: bold;
+    transition: 0.25s;
+    color: white;
 }
 
 .botonaction:hover{
-    background-color: rgb(255, 213, 161);
+    background-color: #30a3e6;
     cursor: pointer;
 }
 
 #mainpage{
     display: flex;
     width: 100%;
-}
-
-#indexizquierda{
-    width: 50%;
-    text-align: center;
-    
-}
-
-#indexizquierda img{
-    height: 400px;
 }
 
 #search{

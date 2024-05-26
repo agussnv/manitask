@@ -15,22 +15,18 @@
   <script>
     autenticar();
   </script>
-    <header>
-        <nav>
-          <p id="marca">manitask</p>
-          <div id="search">
-            <input class="camposearch" type="text">
-            <button id="botonsearch"><img src="imgs/searchmagnifierinterfacesymbol1_79893.png"></button>
-          </div>
-          <ul>
-            <li><button type="button" class="nolink radius boton"><a class="nolink" href="profile.html">My profile</a></button></li>
-            <li><button type="button" onclick="logout()" class="nolink radius boton">Log out</button></li>
-          </ul>
-        </nav>
-      </header>
-      <div style="text-align: center;">
+  <header>
+    <nav>
+      <p id="marca">mani<span style="color: #37b5fd;">task</span></p>
+      <ul>
+        <li><a class="nolink" href="profile.html"><button type="button" class="nolink botonnav">My profile</button></a></li>
+        <li><button type="button" onclick="logout()" class="nolink botonnav">Log out</button></li>
+      </ul>
+    </nav>
+  </header>
+      <div style="text-align: center;;">
         <h1 id="nombre" class="fade quicksand">Bienvenido </h1>
-        <button type="button" class="nolink radius boton"><a class="nolink" href="profile.html">My profile</a></button>
+        <a class="nolink" href="profile.html"><button type="button" class="nolink botonnav">My profile</button></a>
       </div>
     <script>
       welcomeName();

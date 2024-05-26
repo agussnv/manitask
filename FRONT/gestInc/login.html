@@ -3,25 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="./components/Requester.js"></script>
+    <script src="./js/main.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Iniciar sesión</title>
 </head>
 <body>
-    <h1>Iniciar sesión</h1>
-    <div id="diverror">
-        <p>Error: el correo/contraseña es incorrecto.</p>
-    </div>
-    <form>
-        <input type="email" placeholder="Email" id="email">
-        <input type="password" placeholder="Password" id="password">
-        <button type="button" onclick="login()">Log in</button> <br>
-    </form>
-    <p><a href="resetpassword.html">Restablecer contraseña</a> | <a href="index.html">Crear nueva cuenta</a> | <a href="listausuarios.html">Lista usuarios</a> | <a href="delete.html">Borrar usuario</a></p>
-    <button type="button" onclick="testCookies()">Testear cookies</button>
-    <script src="./js/main.js"></script>
+    <header>
+        <nav>
+          <p id="marca">mani<span style="color: #37b5fd;">task</span></p>
+          <ul>
+            <li><a href="index.html" class="nolink botonnav">Sign up</a></li>
+          </ul>
+        </nav>
+    </header>
+    <section id="mainpage">
+        <div id="indexizquierda">
+          <img src="imgs/imagen-index.svg" alt="handshake">
+        </div>
+        <div class="contenedor">
+            <div class="recuadro">
+              <!--Todas las advertencias/avisos que pueden llegar a salir al crear un usuario-->
+                <h1 class="tcenter" style="margin-top: 0;">Welcome Back</h1>
+                <div id="diverror">
+                    <p>Error: el correo/contraseña es incorrecto.</p>
+                </div>
+                <div class="inputs">
+                    <label>Email</label>
+                    <input type="email" placeholder="Email" id="email">
+                    <label>Password</label>
+                    <input type="password" placeholder="Password" id="password"> <br>
+                    <p style="margin-top: -5px; margin-bottom: 20px;"><a class="nolink ligth" href="resetpassword.html">Forgot your password?</a></p>
+                    <button class="botonaction" onclick="login()">Log In</button>
+                </div>
+            </div>
+          </div>
+      </section>
     <script>
-        isLogged();
+        
     </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="./components/Requester.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Gest Inc</title>
+    <title>manitask</title>
 </head>
 <body>
     <header>
@@ -24,14 +24,17 @@
       <div class="contenedor">
           <div class="recuadro">
             <!--Todas las advertencias/avisos que pueden llegar a salir al crear un usuario-->
-              <h1 class="tcenter">Create an account</h1>
+              <h1 class="tcenter" style="margin-top: 0;">Create an account</h1>
               <p class="tcenter">Already have an account? <a href="login.html">Sign in</a></p>
               <p id="diverror">Email is already in use</p>
               <p id="diverror2">Username is already in use</p>
               <p id="divok">Account has been created</p>
               <div class="inputs">
+                <label>Username</label>
                 <input type="text" placeholder="Username" id="username">
+                <label>Email</label>
                 <input type="email" placeholder="Email" id="email">
+                <label>Password</label>
                 <input type="password" placeholder="Password" id="password"> <br>
                 <!--Hacemos una llamada a la función createRegisterRequest() envíandole por parámetro los valores de los inputs-->
                 <button class="botonaction" onclick="createRegisterRequest({username: document.getElementById('username').value, email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>

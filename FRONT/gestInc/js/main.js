@@ -95,8 +95,6 @@ async function createLoginRequest(data){
     //location.href='home.html'
     const p = document.createElement("p");
     p.innerHTML = rest.user.username;
-    console.log("--- valor de 'p' ---")
-    console.log(p);
     contenedor.appendChild(p);
     //printUserInformation(rest.user);
     document.getElementById("diverror").style.display = "none";
@@ -113,7 +111,7 @@ async function login(){
     password: pass
   },"http://localhost:3006/users/login");
   if(rest.res == 1){
-    alert("erroreerr");
+    document.getElementById("diverror").style.display = "flex";
   }else if(rest.res == 0){
     //document.cookie = "???; max-age=0"; //BORRAR COOKIES QUE SEAN IGUAL AL PRIMER PARÁMETRO
     document.cookie = "id="+rest.user;
