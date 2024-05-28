@@ -26,7 +26,7 @@ async function createGetUsersRequest(){
   const r1 = new Requester();
   const tableBody = document.getElementById("tablebody");
   //Hacemos una llamada a la ruta de /getusers
-  let req = await r1.postRequest({},"http://localhost:3006/users/getusers");
+  let req = await r1.postRequest({},"http://localhost:3000/users/getusers");
   console.log(req)
   /*la variable donde guardamos el retorno de /getusers la enviamos a la función drawOnTable donde
   la imprimirá dentro de una tabla en el archivo html*/
@@ -65,7 +65,7 @@ async function createRegisterRequest(data) {
   //Hacemos un request a la ruta /register y le enviamos los parámetros que le hemos enviado desde los inputs
   let rest = await r1.postRequest(
     {username: data.username, email: data.email,password: data.password},
-    "http://localhost:3006/users/register");
+    "http://localhost:3000/users/register");
   //establecemos los avisos que se mostrarán dependiendo del retorno de la ruta /register que se guardará en la variable rest
   if(rest.res == 1){
     document.getElementById("diverror").style.display = "flex";
@@ -88,7 +88,7 @@ async function createLoginRequest(data){
   let rest = await r1.postRequest({
     email: data.email,
     password: data.password
-  },"http://localhost:3006/users/login");
+  },"http://localhost:3000/users/login");
   if(rest.res == 1){
     document.getElementById("diverror").style.display = "flex";
   }else{
@@ -109,7 +109,7 @@ async function login(){
   let rest = await requester.loginRequest({
     email: email,
     password: pass
-  },"http://localhost:3006/users/login");
+  },"http://localhost:3000/users/login");
   if(rest.res == 1){
     document.getElementById("diverror").style.display = "flex";
   }else if(rest.res == 0){
@@ -151,7 +151,7 @@ function drawOnTable(res) {
   let rest = await requester.loginRequest({
     email: email,
     password: pass
-  },"http://localhost:3006/users/login");
+  },"http://localhost:3000/users/login");
   if(rest.res == 1){
     alert("erroreerr");
   }else if(rest.res == 0){
@@ -170,7 +170,7 @@ async function printUserInformation(data){
   const r1 = new Requester();
   let rest = await r1.loginRequest({
     _id: data
-  },"http://localhost:3006/users/user");
+  },"http://localhost:3000/users/user");
   console.log("--- main.js ---")
   console.log(rest.user);
 }*/
@@ -181,7 +181,7 @@ async function createResetPasswordRequest(data){
     email: data.email,
     password1: data.password1,
     password2: data.password2
-  },"http://localhost:3006/users/reset");
+  },"http://localhost:3000/users/reset");
   //Lo mismo que los anteriores casos, dependiendo del caso retorna 1, 2 u otro
   if(rest.res == 1){
   document.getElementById("diverror").style.display = "flex";
@@ -202,7 +202,7 @@ async function createDeleteRequest(data){
     email: data.email,
     password: data.password,
     deletemsg: data.deletemsg
-  },"http://localhost:3006/users/delete");
+  },"http://localhost:3000/users/delete");
   if(rest.res == 1){ //email/password incorrecta
     document.getElementById("diverror").style.display = "flex";
     document.getElementById("diverror2").style.display = "none";
@@ -222,16 +222,21 @@ async function logout(){
   document.cookie = "id=; max-age=0";
   document.cookie = "username=; max-age=0";
   let requester = new Requester();
-  let rest = await requester.logoutRequest({},"http://localhost:3006/users/logout");
+  let rest = await requester.logoutRequest({},"http://localhost:3000/users/logout");
   console.log(rest.res);
   location.href='login.html';
 }
 
 async function autenticar(){
   let requester = new Requester();
-  let rest = await requester.request({},"http://localhost:3006/users/autenticar");
+  let rest = await requester.cookiesRequest({cookie: getCookie("id")},"http://localhost:3000/users/autenticar");
+  console.log(rest);
+  if(rest.res == 1){
+    alert("La cookie existe en la BBDD");
+  }else{
+    logout();
+  }
 }
-
 function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
@@ -248,6 +253,17 @@ function getCookie(cname) {
   return "";
 }
 
+async function datosUsuari(){
+  let username = document.getElementById("username");
+  let email = document.getElementById("email");
+  let password = document.getElementById("password");
+  let requester = new Requester();
+  let rest = await requester.cookiesRequest({cookie: getCookie("id")},"http://localhost:3000/users/autenticar");
+  username.value = rest.username;
+  email.value = rest.email;
+  password.value = rest.password;
+}
+
 function welcomeName(){
   const name = getCookie("username");
   const original = document.getElementById("nombre").innerHTML;
@@ -259,4 +275,16 @@ function isLogged(){
     location.href='home.html';
     alert("Ya existe una sesión abierta")
   }
+}
+
+async function addtask(){
+  let requester = new Requester();
+  let rest = await requester.taskRequest({
+    user: getCookie("id"),
+    title: document.getElementById("title").value,
+    desc: document.getElementById("description").value,
+    time: document.getElementById("time").value,
+    price: document.getElementById("price").value
+  },"http://localhost:3000/users/addtask");
+  console.log(rest.res);
 }

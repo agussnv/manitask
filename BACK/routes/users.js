@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://AgustinNoviello:6cZGgy55LuCpsTuc@gestionincidencias.mnhbam6.mongodb.net/?retryWrites=true&w=majority&appName=GestionIncidencias";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -78,6 +78,26 @@ router.post('/logout', function (req, res) {
     res.send(JSON.stringify({ res: "No existe ninguna sesión" }));
   }
 });
+
+router.post('/autenticar', async function(req, res, next) {
+  try {
+    await client.connect();
+    //buscamos un usuario que coincida el correo con la contraseña introducidos, en caso de encontrar coincidencia, retorna 1, en caso de que no, retorna 0
+    const userExist = await client
+    .db("gestInc")
+    .collection("test_js")
+    .findOne({_id: new ObjectId(req.body._id)});
+    if(userExist){
+      res.send(JSON.stringify({res: 1, username: userExist.username, email: userExist.email, password: userExist.password}));
+    }else{
+      res.send(JSON.stringify({res: 0}));
+    }
+  } finally {
+    //Cerramos la comunicación con el cliente
+    await client.close();
+  }
+});
+
 
 /*router.post('/user', async function(req, res, next) {
   try {
@@ -214,6 +234,29 @@ router.post('/getusers', async function(req, res, next) {
       console.log(error);
     }
   } finally {
+    await client.close();
+  }
+});
+
+router.post('/addtask', async function(req, res, next) {
+  try {
+    await client.connect();
+    //buscamos un usuario que coincida el correo con la contraseña introducidos, en caso de encontrar coincidencia, retorna 1, en caso de que no, retorna 0
+    const userExist = await client
+    .db("gestInc")
+    .collection("test_js")
+    .findOne({_id: new ObjectId(req.body._id)});
+    if(userExist){
+      const result = await client
+      .db("gestInc")
+      .collection("tasks")
+      .insertOne({title: req.body.title, desc: req.body.desc, time: req.body.time, price: req.body.price, user: [ {id: req.body._id, name: userExist.username, email: userExist.email} ]});
+      res.send(JSON.stringify({res: 1}));
+    }else{
+      res.send(JSON.stringify({res: 0}));
+    }
+  } finally {
+    //Cerramos la comunicación con el cliente
     await client.close();
   }
 });

@@ -264,3 +264,70 @@ button{
 #information{
     margin: 50px;
 }
+
+.inputsprofile{
+    display: flex;
+    justify-content: space-around;
+}
+
+.inputsprofile input::placeholder{
+    font-family: "Raleway", sans-serif;
+}
+
+.inputsprofile input{
+    font-family: "Raleway", sans-serif;
+    font-size: 18px;
+    text-indent: 18px;
+    border: 1q solid #a5a5a5;
+    margin-bottom: 20px;
+    width: 30%;
+    height: 50px;
+    margin-top: 10px;
+
+    &:focus{
+        outline: none;
+    }
+}
+
+.taskrecuadro{
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+}
+
+.tasks{
+    display: flex;
+    flex-direction: column;
+    width: 550px;
+    border: 1px solid red;
+    text-align: center;
+}
+
+.tasks input{
+    font-size: 15px;
+    text-indent: 20px;
+    border: 1q solid #a5a5a5;
+    margin-bottom: 20px;
+    height: 50px;
+    margin-top: 10px;
+
+    &:focus{
+        outline: none;
+    }
+}
+
+.tasks button{
+    font-family: "Raleway", sans-serif;
+    width: 100%;
+    font-size: 15px;
+    padding: 12px;
+}
+
+.tasks input::placeholder{
+    font-family: "Raleway", sans-serif;
+}
+
+.tasks label{
+    font-weight: bold;
+    margin-top: 20px;
+}

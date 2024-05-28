@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   session({
     secret: "contraseñasecreta",
-    cookie: { maxAge: 60000},
+    cookie: {maxAge: 60000},
     resave: true,
     saveUninitialized: true
   })

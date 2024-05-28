@@ -116,7 +116,7 @@ class Requester {
     }
   }
 
- /* async loginRequest(data, url = null) {
+  async cookiesRequest(data,url = null) {
     if (url) {
       this.httpRequest = url;
     } else {
@@ -129,6 +129,7 @@ class Requester {
       }
     }
 
+    let id = {"_id": getCookie("id")};
     try {
       const response = await fetch(this.httpRequest, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -138,16 +139,14 @@ class Requester {
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         //Todas las variables que le pasaremos a lo largo del desarrollo para las diferentes funcionalidades
-        body: JSON.stringify({
-          _id: data._id
-        }), // body data type must match "Content-Type" header
+        body: JSON.stringify(id), // body data type must match "Content-Type" header
       });
       const resp = await response.json();
       return resp;
     } catch (error) {
       throw error;
     }
-  }*/
+  }
 
   async logoutRequest(data, url = null) {
     if (url) {
@@ -178,7 +177,7 @@ class Requester {
     }
   }
 
-  async logoutRequest(data, url = null) {
+  async taskRequest(data,url = null) {
     if (url) {
       this.httpRequest = url;
     } else {
@@ -196,9 +195,17 @@ class Requester {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, *cors, same-origin
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
+        //Todas las variables que le pasaremos a lo largo del desarrollo para las diferentes funcionalidades
+        body: JSON.stringify({
+          _id: getCookie("id"),
+          title: data.title,
+          desc: data.desc,
+          time: data.desc,
+          price: data.price
+        }), // body data type must match "Content-Type" header
       });
       const resp = await response.json();
       return resp;

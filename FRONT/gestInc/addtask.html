@@ -21,12 +21,18 @@
       </ul>
     </nav>
   </header>
-      <div style="text-align: center;;">
-        <h1 id="nombre" class="fade quicksand">Bienvenido </h1>
-        <a class="nolink" href="addtask.html"><button type="button" class="nolink botonnav">Create a new task</button></a>
-      </div>
-    <script>
-      welcomeName();
-    </script>
+  <div class="taskrecuadro">
+    <div class="tasks">
+      <label for="">Title</label>
+      <input type="text" id="title">
+      <label for="">Description</label>
+      <input type="text" id="description">
+      <label for="">Time</label>
+      <input type="text" id="time">
+      <label for="">Price</label>
+      <input type="number" id="price">
+      <input type="button" value="Create task" onclick="addtask()">
+    </div>
+  </div>
 </body>
 </html>
