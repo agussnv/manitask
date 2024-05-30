@@ -36,12 +36,14 @@
                 <input type="email" placeholder="Email" id="email">
                 <label>Password</label>
                 <input type="password" placeholder="Password" id="password"> <br>
-                <!--Hacemos una llamada a la función createRegisterRequest() envíandole por parámetro los valores de los inputs-->
                 <button class="botonaction" onclick="createRegisterRequest({username: document.getElementById('username').value, email: document.getElementById('email').value, password: document.getElementById('password').value})">Sign up</button>
               </div>
           </div>
         </div>
     </section>
     <script src="./js/main.js"></script>
+    <script>
+      isLogged();
+  </script>
 </body>
 </html>

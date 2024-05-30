@@ -218,6 +218,7 @@ async function createDeleteRequest(data){
   }
 }
 
+//Con el max-age=0 eliminamos las cookies donde guardamos la información del usuario dentro del cliente.
 async function logout(){
   document.cookie = "id=; max-age=0";
   document.cookie = "username=; max-age=0";
@@ -227,6 +228,7 @@ async function logout(){
   location.href='login.html';
 }
 
+//Comprobar si la cookie(id) existe dentro de la base de datos, en caso que exista retorna 1 y una alerta, en caso contrario hace logOut y borra las cookies.
 async function autenticar(){
   let requester = new Requester();
   let rest = await requester.cookiesRequest({cookie: getCookie("id")},"http://localhost:3000/users/autenticar");
@@ -237,6 +239,8 @@ async function autenticar(){
     logout();
   }
 }
+
+//Función para conseguir la cookie con el nombre enviado por parámetro
 function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
@@ -264,16 +268,24 @@ async function datosUsuari(){
   password.value = rest.password;
 }
 
+//Agarra la cookie mediante la función getCookie y la agrega al H1 del home.html
 function welcomeName(){
   const name = getCookie("username");
   const original = document.getElementById("nombre").innerHTML;
   const nom = document.getElementById("nombre").innerHTML = original + name;
 }
 
+//Comprobar si ya existe una cookie, en caso de existir e ir al login.html, te redirige al home
 function isLogged(){
   if(document.cookie){
     location.href='home.html';
-    alert("Ya existe una sesión abierta")
+  }
+}
+
+//Comprobar si existe cookie, en caso de que no redirige al login.html y te saca del home o profile.
+function isNotLogged(){
+  if(!document.cookie){
+    location.href='login.html';
   }
 }
 
@@ -288,3 +300,5 @@ async function addtask(){
   },"http://localhost:3000/users/addtask");
   console.log(rest.res);
 }
+
+//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

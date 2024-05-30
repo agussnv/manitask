@@ -62,7 +62,7 @@ router.post('/login', async function(req, res, next) {
 });
 
 //Logout
-//Destruye la sesión.
+//Destruye la sesión en caso de existir.
 router.post('/logout', function (req, res) {
   if (req.session.loggedIn) {
     req.session.destroy(function(err) {
@@ -79,10 +79,12 @@ router.post('/logout', function (req, res) {
   }
 });
 
+//Comprueba si la cookie guardada existe dentro de la BBDD,
+//si existe retorna un 1 y la información de usuario (ya que en otra función extra que añadí me hará falta),
+//en caso contrario retorna 0.
 router.post('/autenticar', async function(req, res, next) {
   try {
     await client.connect();
-    //buscamos un usuario que coincida el correo con la contraseña introducidos, en caso de encontrar coincidencia, retorna 1, en caso de que no, retorna 0
     const userExist = await client
     .db("gestInc")
     .collection("test_js")
