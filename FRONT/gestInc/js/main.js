@@ -22,44 +22,6 @@
   }
 }*/
 
-async function createGetUsersRequest(){
-  const r1 = new Requester();
-  const tableBody = document.getElementById("tablebody");
-  //Hacemos una llamada a la ruta de /getusers
-  let req = await r1.postRequest({},"http://localhost:3000/users/getusers");
-  console.log(req)
-  /*la variable donde guardamos el retorno de /getusers la enviamos a la función drawOnTable donde
-  la imprimirá dentro de una tabla en el archivo html*/
-  drawOnTable(req.users);
-  if(req.res == 1){
-    document.getElementById("diverror").style.display = "flex";
-  }else{
-    document.getElementById("diverror").style.display = "none";
-  }
-}
-
- function drawOnTable(res) {
-   const tableBody = document.getElementById("tableBody");
-   tableBody.innerHTML = "";
-   res.forEach((element) => {
-    //creamos los diferentes elementos donde se mostrará la información
-     const r = document.createElement("tr");
-     const c1 = document.createElement("td");
-     const c2 = document.createElement("td");
-     const c3 = document.createElement("td");
-     /*añadimos al archivo html el username, email y password
-     que conseguimos a través del retorno de la ruta de /getusers*/
-     c1.innerHTML = element.username;
-     c2.innerHTML = element.email;
-     c3.innerHTML = element.password;
-     //y unimos las 3 columnas a la fila 'r'
-     r.appendChild(c1);
-     r.appendChild(c2);
-     r.appendChild(c3);
-     tableBody.appendChild(r);
-    });
-  }
-
 async function createRegisterRequest(data) {
   const r1 = new Requester();
   //Hacemos un request a la ruta /register y le enviamos los parámetros que le hemos enviado desde los inputs
@@ -118,28 +80,6 @@ async function login(){
     document.cookie = "username="+rest.name;
     location.href='home.html';
   }
-}
-
-function drawOnTable(res) {
-  const tableBody = document.getElementById("tableBody");
-  tableBody.innerHTML = "";
-  res.forEach((element) => {
-  //creamos los diferentes elementos donde se mostrará la información
-    const r = document.createElement("tr");
-    const c1 = document.createElement("td");
-    const c2 = document.createElement("td");
-    const c3 = document.createElement("td");
-    /*añadimos al archivo html el username, email y password
-    que conseguimos a través del retorno de la ruta de /getusers*/
-    c1.innerHTML = element.username;
-    c2.innerHTML = element.email;
-    c3.innerHTML = element.password;
-    //y unimos las 3 columnas a la fila 'r'
-    r.appendChild(c1);
-    r.appendChild(c2);
-    r.appendChild(c3);
-    tableBody.appendChild(r);
-  });
 }
 
 //FUNCIÓN PARA RECOGER EL REST.USER Y COMPARARLO CON DOCUMENT.COOKIE PERO NO SE COMO AGARRAR EL REST.USER SIN LLAMAR AL LOGIN CADA VEZ QUE QUIERE TESTEARCOOKIES
@@ -299,6 +239,44 @@ async function addtask(){
     price: document.getElementById("price").value
   },"http://localhost:3000/users/addtask");
   console.log(rest.res);
+}
+
+async function getTasks(){
+  const r1 = new Requester();
+  let req = await r1.postRequest({}, "http://localhost:3000/users/gettasks")
+  drawOnTable(req.tasks);
+}
+
+function drawOnTable(res){
+  const tableBody = document.getElementById("tableBody");
+  tableBody.innerHTML = "";
+  res.forEach((element) => {
+    const r = document.createElement("tr");
+    const c1 = document.createElement("td");
+    const c2 = document.createElement("td");
+    const c3 = document.createElement("td");
+    const c4 = document.createElement("td");
+    const c5 = document.createElement("td");
+    const button = document.createElement("a");
+    button.textContent = "Accept";
+    button.value = "Accept";
+    button.type = "button";
+    button.href = "http://127.0.0.1:3001/FRONT/gestInc/test.html?id=" + element.user.id;
+
+    c1.innerHTML = element.title;
+    c2.innerHTML = element.desc;
+    c3.innerHTML = element.time;
+    c4.innerHTML = element.price;
+    c5.innerHTML = element.user.name;
+
+    r.appendChild(c1);
+    r.appendChild(c2);
+    r.appendChild(c3);
+    r.appendChild(c4);
+    r.appendChild(c5);
+    r.appendChild(button);
+    tableBody.appendChild(r);
+  })
 }
 
 //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

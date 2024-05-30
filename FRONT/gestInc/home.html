@@ -12,6 +12,15 @@
     <title>Registrarse</title>
 </head>
 <body>
+  <script>
+    getTasks();
+  </script>
+  <script>
+    isNotLogged();
+  </script>
+  <script>
+    //autenticar();
+  </script>
   <header>
     <nav>
       <p id="marca">mani<span style="color: #37b5fd;">task</span></p>
@@ -24,12 +33,22 @@
   </header>
       <div style="text-align: center;;">
         <h1 id="nombre" class="fade quicksand">Bienvenido </h1>
-        <a class="nolink" href="addtask.html"><button type="button" class="nolink botonnav">Create a new task</button></a>
+        <script>
+          welcomeName();
+        </script>
+        <a class="nolink" href="addtask.html"><button type="button" class="nolink botonnav">Necesitas un manitas?</button></a>
       </div>
-    <script>
-      <!--Script para mostrar el nombre del usuario guardado en la cookie user-->
-      welcomeName();
-      isNotLogged();
-    </script>
+      <div id="task-contain" style="display: flex;justify-content: center;">
+        <table>
+          <thead style="border: solid 1px black">
+            <th>Title</th>
+            <th>Description</th>
+            <th>Time to do</th>
+            <th>Price</th>
+            <th>User</th>
+          </thead>
+          <tbody id="tableBody" style="text-align: center;"></tbody>
+        </table>
+      </div>
 </body>
 </html>

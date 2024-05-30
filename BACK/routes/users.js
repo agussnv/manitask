@@ -82,7 +82,7 @@ router.post('/logout', function (req, res) {
 //Comprueba si la cookie guardada existe dentro de la BBDD,
 //si existe retorna un 1 y la información de usuario (ya que en otra función extra que añadí me hará falta),
 //en caso contrario retorna 0.
-router.post('/autenticar', async function(req, res, next) {
+/*router.post('/autenticar', async function(req, res, next) {
   try {
     await client.connect();
     const userExist = await client
@@ -98,7 +98,7 @@ router.post('/autenticar', async function(req, res, next) {
     //Cerramos la comunicación con el cliente
     await client.close();
   }
-});
+});*/
 
 
 /*router.post('/user', async function(req, res, next) {
@@ -252,7 +252,7 @@ router.post('/addtask', async function(req, res, next) {
       const result = await client
       .db("gestInc")
       .collection("tasks")
-      .insertOne({title: req.body.title, desc: req.body.desc, time: req.body.time, price: req.body.price, user: [ {id: req.body._id, name: userExist.username, email: userExist.email} ]});
+      .insertOne({title: req.body.title, desc: req.body.desc, time: req.body.time, price: req.body.price, user: {id: req.body._id, name: userExist.username, email: userExist.email}});
       res.send(JSON.stringify({res: 1}));
     }else{
       res.send(JSON.stringify({res: 0}));
@@ -260,6 +260,27 @@ router.post('/addtask', async function(req, res, next) {
   } finally {
     //Cerramos la comunicación con el cliente
     await client.close();
+  }
+});
+
+router.post('/gettasks', async function(req, res, next){
+  try{
+    await client.connect;
+    try{
+      const tasks = await client
+      .db("gestInc")
+      .collection("tasks")
+      .find().toArray();
+      if(tasks.length > 0){
+        res.send(JSON.stringify({res: 0, tasks: tasks}));
+      } else {
+        res.send(JSON.stringify({res: 1, tasks: tasks}));
+      }
+    } catch(error) {
+      console.log(error);
+    }
+  } finally {
+    client.close();
   }
 });
 

@@ -203,7 +203,7 @@ class Requester {
           _id: getCookie("id"),
           title: data.title,
           desc: data.desc,
-          time: data.desc,
+          time: data.time,
           price: data.price
         }), // body data type must match "Content-Type" header
       });
