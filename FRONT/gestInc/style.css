@@ -1,7 +1,11 @@
 body{
-    margin: 0 100px;
+    margin: 0;
     background-color: white;
     font-family: "Raleway", sans-serif;
+}
+
+.marginlr{
+    margin: 0 100px;
 }
 
 #diverror{
@@ -39,16 +43,7 @@ body{
 
 header{
     position: relative;
-}
-
-header::before {
-    content: '';
-    position: absolute;
-    left: -100px; /* Ancho del margen del body */
-    right: -100px; /* Ancho del margen del body */
-    bottom: 0;
-    height: 1px; /* Grosor del borde */
-    background-color: #a5a5a5; /* Color del borde */
+    border-bottom: 1px solid #a5a5a5;
 }
 
 nav{
@@ -56,6 +51,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0 100px;
 }
 
 ul{
@@ -268,9 +264,6 @@ button{
     }
 }
 
-#information{
-    margin: 50px;
-}
 
 .inputsprofile{
     display: flex;

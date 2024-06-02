@@ -301,5 +301,3 @@ function drawOnTable(res){
     esquema.appendChild(contenedor);
   })
 }
-
-//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
