@@ -1,5 +1,5 @@
 body{
-    margin: 0;
+    margin: 0 100px;
     background-color: white;
     font-family: "Raleway", sans-serif;
 }
@@ -38,16 +38,23 @@ body{
 }
 
 header{
-    border-bottom: 1px solid #a5a5a5;
+    position: relative;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    left: -100px; /* Ancho del margen del body */
+    right: -100px; /* Ancho del margen del body */
+    bottom: 0;
+    height: 1px; /* Grosor del borde */
+    background-color: #a5a5a5; /* Color del borde */
 }
 
 nav{
-    padding-left: 50px;
-    padding-right: 50px;
     height: 65px;
     display: flex;
     justify-content: space-between;
-    margin: 0 100px;
     align-items: center;
 }
 
@@ -316,15 +323,16 @@ button{
     }
 }
 
+
+.tasks input::placeholder{
+    font-family: "Raleway", sans-serif;
+}
+
 .tasks button{
     font-family: "Raleway", sans-serif;
     width: 100%;
     font-size: 15px;
     padding: 12px;
-}
-
-.tasks input::placeholder{
-    font-family: "Raleway", sans-serif;
 }
 
 .tasks label{
@@ -344,6 +352,20 @@ button{
     background-color: white;
     border-radius: 10px;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.test #title{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.test #desc{
+    height: 60px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .flex{

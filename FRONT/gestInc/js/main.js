@@ -242,7 +242,7 @@ async function addtask(){
 }
 
 async function getTasks(){
-  const r1 = new Requester();
+  const r1 = await new Requester();
   let req = await r1.postRequest({}, "http://localhost:3000/users/gettasks")
   drawOnTable(req.tasks);
 }
@@ -257,27 +257,31 @@ function drawOnTable(res){
     contenedor.className="test";
 
     const title = document.createElement("h2");
+    title.id="title";
     const desc = document.createElement("p");
+    desc.id="desc";
 
     const timeContain = document.createElement("div");
     timeContain.className="flex vertical-center";
     timeContain.innerHTML=svgTime;
     const time = document.createElement("span");
+    time.id="time";
 
     const dollarContain = document.createElement("div");
     dollarContain.className="flex vertical-center";
     dollarContain.innerHTML=svgDollar;
     const dollar = document.createElement("span");
+    dollar.id="cash";
 
     const footer = document.createElement("div");
     footer.className = "flex vertical-center space-between";
     const author = document.createElement("span");
+    author.id="author";
     author.innerHTML = "Author: ";
-    const button = document.createElement("input");
-    button.type = "button";
-    button.className = "botonaction"
-    button.value = "View Task"
-    button.href = "http://127.0.0.1:3001/FRONT/gestInc/test.html?id=" + element.user.id;
+    const button = document.createElement("a");
+    button.className = "botonaction nolink";
+    button.innerHTML = "View Task";
+    button.href = "http://127.0.0.1:3001/FRONT/gestInc/test.html?id=" + element._id;
 
     title.innerHTML = element.title;
     desc.innerHTML = element.desc;
