@@ -265,7 +265,7 @@ router.post('/addtask', async function(req, res, next) {
 
 router.post('/gettasks', async function(req, res, next){
   try{
-    await client.connect;
+    await client.connect();
     try{
       const tasks = await client
       .db("gestInc")
@@ -278,9 +278,13 @@ router.post('/gettasks', async function(req, res, next){
       }
     } catch(error) {
       console.log(error);
+      res.status(500).send({ res: 2, message: 'Error fetching tasks' });
     }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ res: 3, message: 'Error connecting to database' });
   } finally {
-    client.close();
+    await client.close();
   }
 });
 
