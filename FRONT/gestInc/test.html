@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Sedan+SC&display=swap" rel="stylesheet">
+    <script src="./components/Requester.js"></script>
+    <script src="./js/main.js"></script>
+    <link rel="stylesheet" href="style.css">
     <title>TEST</title>
 </head>
 <body>
-    <h1>test accept</h1>
+    <header>
+        <nav>
+          <p id="marca">mani<span style="color: #37b5fd;">task</span></p>
+          <ul>
+            <li><a class="nolink" href="home.html"><button type="button" class="nolink botonnav">Home</button></a></li>
+            <li><a class="nolink" href="profile.html"><button type="button" class="nolink botonnav">My profile</button></a></li>
+            <li><button type="button" onclick="logout()" class="nolink botonnav">Log out</button></li>
+          </ul>
+        </nav>
+      </header>
+      <h1 id="title">Title task: </h1>
+      <p id="desc">Description: </p>
+      <p id="price">Price: </p>
+      <p id="user">User: </p>
+      <input type="button" value="Accept" onclick="acceptTask()">
+      <script>
+        mostrarDataTask();
+      </script>
 </body>
 </html>

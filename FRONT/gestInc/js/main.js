@@ -238,7 +238,11 @@ async function addtask(){
     time: document.getElementById("time").value,
     price: document.getElementById("price").value
   },"http://localhost:3000/users/addtask");
-  console.log(rest.res);
+  if(rest.res == 1){
+    location.href='home.html';
+  }else if(rest.res == 0){
+    alert(rest.res);
+  }
 }
 
 async function getTasks(){
@@ -300,4 +304,43 @@ function drawOnTable(res){
     contenedor.appendChild(footer);
     esquema.appendChild(contenedor);
   })
+}
+
+function getParameterByName(name) {
+  var regex = new RegExp("[?]" + name + "=([^]*)"),
+      results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+async function mostrarDataTask(){
+  let r1 = new Requester();
+  let rest = await r1.taskIDRequest({_id: getParameterByName('id')}, "http://localhost:3000/users/findTask")
+  console.log(rest.res);
+  document.getElementById("title").innerHTML += rest.res.title;
+  document.getElementById("desc").innerHTML += rest.res.desc;
+  document.getElementById("price").innerHTML += rest.res.price + " €";
+  document.getElementById("user").innerHTML += rest.res.user.name;
+}
+
+async function acceptTask() {
+  let r1 = new Requester();
+  let rest = await r1.taskIDRequest({_id: getParameterByName('id')}, "http://localhost:3000/users/findTask")
+
+  const taskID = getParameterByName('id');
+  const userTask = rest.res.user.id;
+  const taskerID = getCookie('id');
+  console.log("Task ID: " + taskID) //la notificación que se le envíe al usuario será para la task con esta ID
+  console.log("User Task ID: " + userTask) //se deberá enviar notificación a este usuario
+  console.log("Tasker ID: " + taskerID) //el tasker que se le enviará al usuario como candidato
+
+  let rest2 = await r1.taskerRequest({_id: taskID, user: userTask, tasker: taskerID}, "http://localhost:3000/users/sendCandidate");
+  if (rest2.res == 1){
+    alert("Tasker añadido con éxito");
+  }else if (rest2.res == 0){
+    alert("Error");
+  }else if(rest2.res == -1){
+    alert("No puedes ser tasker de tu propia task")
+  }else if(rest2.res == -2){
+    alert("Ya te has inscrito a esta task");
+  }
 }

@@ -213,4 +213,68 @@ class Requester {
       throw error;
     }
   }
+
+  async taskIDRequest(data,url = null) {
+    if (url) {
+      this.httpRequest = url;
+    } else {
+      //En caso que le pasemos una url, la mostrará por consola, de caso contrario imprimirá el error
+      if (this.httpRequest.length > 0) {
+        console.log(this.httpRequest);
+      } else {
+        console.log("No url provided on httpRequest");
+        throw "No url provided on httpRequest";
+      }
+    }
+
+    try {
+      const response = await fetch(this.httpRequest, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: getParameterByName('id')
+        }),
+      });
+      const resp = await response.json();
+      return resp;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async taskerRequest(data,url = null) {
+    if (url) {
+      this.httpRequest = url;
+    } else {
+      //En caso que le pasemos una url, la mostrará por consola, de caso contrario imprimirá el error
+      if (this.httpRequest.length > 0) {
+        console.log(this.httpRequest);
+      } else {
+        console.log("No url provided on httpRequest");
+        throw "No url provided on httpRequest";
+      }
+    }
+
+    try {
+      const response = await fetch(this.httpRequest, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: getParameterByName('id'),
+          user: data.user,
+          tasker: data.tasker
+        }),
+      });
+      const resp = await response.json();
+      return resp;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

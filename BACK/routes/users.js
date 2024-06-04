@@ -243,20 +243,33 @@ router.post('/getusers', async function(req, res, next) {
 router.post('/addtask', async function(req, res, next) {
   try {
     await client.connect();
+    const db = client.db("gestInc");
+    const usersCollection = db.collection("test_js");
+    const tasksCollection = db.collection("tasks");
     //buscamos un usuario que coincida el correo con la contraseña introducidos, en caso de encontrar coincidencia, retorna 1, en caso de que no, retorna 0
-    const userExist = await client
-    .db("gestInc")
-    .collection("test_js")
-    .findOne({_id: new ObjectId(req.body._id)});
+    const userId = new ObjectId(req.body._id);
+    const userExist = await usersCollection.findOne({_id: userId});
     if(userExist){
-      const result = await client
-      .db("gestInc")
-      .collection("tasks")
-      .insertOne({title: req.body.title, desc: req.body.desc, time: req.body.time, price: req.body.price, user: {id: req.body._id, name: userExist.username, email: userExist.email}});
-      res.send(JSON.stringify({res: 1}));
+      const addTask = await tasksCollection.insertOne(
+        {title: req.body.title,
+          desc: req.body.desc,
+          time: req.body.time,
+          price: req.body.price,
+          user: {id: req.body._id,
+            name: userExist.username,
+            email: userExist.email}}
+          );
+      const addUserArrayTasks = await usersCollection.updateOne(
+        {_id : userId},
+        {$push : {tasks: addTask.insertedId} }
+      );
+      res.send(JSON.stringify({res: 1, task: addTask}));
     }else{
       res.send(JSON.stringify({res: 0}));
     }
+  } catch (error) {
+    console.error("Error adding task:", error);
+    res.status(500).send(JSON.stringify({ res: 0, error: error.message }));
   } finally {
     //Cerramos la comunicación con el cliente
     await client.close();
@@ -287,6 +300,57 @@ router.post('/gettasks', async function(req, res, next){
     await client.close();
   }
 });
+
+router.post("/findTask", async (req, res) => {
+  await client.connect();
+  const taskExist = await client
+  .db("gestInc")
+  .collection("tasks")
+  .findOne({_id: new ObjectId(req.body._id)})
+  if(taskExist){
+    res.send({res: taskExist});
+  }else{
+    console.log("No existe");
+  }
+})
+
+router.post("/sendCandidate", async (req, res) => {
+  await client.connect();
+  const db = client.db("gestInc");
+  const usersCollection = db.collection("test_js");
+  const tasksCollection = db.collection("tasks");
+
+  const taskId = new ObjectId(req.body._id);
+  const authorTaskId = new ObjectId(req.body.user);
+  const taskerId = new ObjectId(req.body.tasker);
+
+  const taskerExist = tasksCollection.findOne({tasker: taskerId});
+
+  if(!authorTaskId.equals(taskerId)){
+    if(!taskerExist)
+  {console.log("Task ID: " + taskId) //la notificación que se le envíe al usuario será para la task con esta ID
+  console.log("User Task ID: " + authorTaskId) //se deberá enviar notificación a este usuario
+  console.log("Tasker ID: " + taskerId) //el tasker que se le enviará al usuario como candidato
+  await client.connect();
+  const taskExist = await client
+  .db("gestInc")
+  .collection("tasks")
+  .findOne({_id: taskId})
+  if(taskExist){
+    //debemos enviarle a un array de la task en tasks la id del tasker
+    tasksCollection.updateOne(
+      {_id: taskId},
+      {$push: {tasker: taskerId}});
+    res.send({res: 1});
+  }else{
+    res.send({res: 0});
+  }}else{
+    res.send({res: -2})
+  }
+}else{
+  res.send({res: -1});
+}
+})
 
 module.exports = router;
 
