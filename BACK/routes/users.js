@@ -324,32 +324,30 @@ router.post("/sendCandidate", async (req, res) => {
   const authorTaskId = new ObjectId(req.body.user);
   const taskerId = new ObjectId(req.body.tasker);
 
-  const taskerExist = tasksCollection.findOne({tasker: taskerId});
-
+  let taskerExist = await tasksCollection.findOne({_id: taskId, tasker: taskerId});
+  console.log(taskerExist);
   if(!authorTaskId.equals(taskerId)){
-    if(!taskerExist)
-  {console.log("Task ID: " + taskId) //la notificación que se le envíe al usuario será para la task con esta ID
-  console.log("User Task ID: " + authorTaskId) //se deberá enviar notificación a este usuario
-  console.log("Tasker ID: " + taskerId) //el tasker que se le enviará al usuario como candidato
-  await client.connect();
-  const taskExist = await client
-  .db("gestInc")
-  .collection("tasks")
-  .findOne({_id: taskId})
-  if(taskExist){
-    //debemos enviarle a un array de la task en tasks la id del tasker
-    tasksCollection.updateOne(
-      {_id: taskId},
-      {$push: {tasker: taskerId}});
-    res.send({res: 1});
+    if(taskerExist == null){
+      console.log("Task ID: " + taskId) //la notificación que se le envíe al usuario será para la task con esta ID
+      console.log("User Task ID: " + authorTaskId) //se deberá enviar notificación a este usuario
+      console.log("Tasker ID: " + taskerId) //el tasker que se le enviará al usuario como candidato
+      await client.connect();
+      const taskExist = await client
+      .db("gestInc")
+      .collection("tasks")
+      .findOne({_id: taskId})
+      if(taskExist){
+        tasksCollection.updateOne({_id: taskId}, {$push: {tasker: taskerId}});
+        res.send({res: 1});
+      }else{
+        res.send({res: 0});
+      }
+    }else{
+      res.send({res: -2})
+    }
   }else{
-    res.send({res: 0});
-  }}else{
-    res.send({res: -2})
+    res.send({res: -1});
   }
-}else{
-  res.send({res: -1});
-}
 })
 
 module.exports = router;
