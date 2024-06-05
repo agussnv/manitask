@@ -10,40 +10,40 @@
     <script src="./js/main.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Registrarse</title>
-</head>
-<body>
-  <script>
-    isNotLogged();
-  </script>
-  <script>
-    getTasks();
-  </script>
-  <script>
-    //autenticar();
-  </script>
-  <header>
-    <nav>
-      <p id="marca">mani<span style="color: #37b5fd;">task</span></p>
-      <ul>
-        <li><a class="nolink" href="home.html"><button type="button" class="nolink botonnav">Home</button></a></li>
-        <li><a class="nolink" href="profile.html"><button type="button" class="nolink botonnav">My profile</button></a></li>
-        <li><button type="button" onclick="logout()" class="nolink botonnav">Log out</button></li>
-      </ul>
-    </nav>
-  </header>
-  <div class="marginlr" style="text-align: center;;">
-    <h1 id="nombre" class="fade quicksand">Bienvenido </h1>
+  </head>
+  <body>
     <script>
-      welcomeName();
+      isNotLogged();
+      getTasks();
+      </script>
+    <script>
     </script>
-    <a class="nolink" href="addtask.html"><button type="button" class="nolink botonnav">Necesitas un manitas?</button></a>
-  </div>
-
-  <div class="marginlr"> <!--Contenedor seccion tasks-->
-    <h1>Available tasks</h1>
-    <div id="esquema" class="grid-container"> <!--Contenedor total task-->
+    <header>
+      <nav>
+        <p id="marca">mani<span style="color: #37b5fd;">task</span></p>
+        <ul>
+          <li id="notification"></li>
+          <li><a class="nolink" href="home.html"><button type="button" class="nolink botonnav">Home</button></a></li>
+          <li><a class="nolink" href="profile.html"><button type="button" class="nolink botonnav">My profile</button></a></li>
+          <li><button type="button" onclick="logout()" class="nolink botonnav">Log out</button></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="marginlr" style="text-align: center;;">
+      <h1 id="nombre" class="fade quicksand">Bienvenido </h1>
+      <script>
+        welcomeName();
+      </script>
+      <a class="nolink" href="addtask.html"><button type="button" class="nolink botonnav">Necesitas un manitas?</button></a>
     </div>
-  </div>
-
+    
+    <div class="marginlr"> <!--Contenedor seccion tasks-->
+      <h1>Available tasks</h1>
+      <div id="esquema" class="grid-container"> <!--Contenedor total task-->
+      </div>
+    </div>
+    <script>
+      notificationTask();
+    </script>
 </body>
 </html>

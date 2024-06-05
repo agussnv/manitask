@@ -11,10 +11,19 @@ const client = new MongoClient(uri, {
   }
 });
 
+async function connectToDatabase() {
+  if (!client.isConnected()) {
+    await client.connect();
+    console.log("Conectado a la base de datos");
+  }
+  return client.db(dbName);
+}
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 res.send("'respond with a resource'");
 });
+
 /* GET users listing. */
 
 //cambiar a get
@@ -302,6 +311,7 @@ router.post('/gettasks', async function(req, res, next){
 });
 
 router.post("/findTask", async (req, res) => {
+  console.log("PEPE: " + req.body._id)
   await client.connect();
   const taskExist = await client
   .db("gestInc")
@@ -323,19 +333,18 @@ router.post("/sendCandidate", async (req, res) => {
   const taskId = new ObjectId(req.body._id);
   const authorTaskId = new ObjectId(req.body.user);
   const taskerId = new ObjectId(req.body.tasker);
+  let taskers = await usersCollection.findOne({_id: authorTaskId});
+  console.log(taskers);
 
   let taskerExist = await tasksCollection.findOne({_id: taskId, tasker: taskerId});
-  console.log(taskerExist);
+
   if(!authorTaskId.equals(taskerId)){
     if(taskerExist == null){
       console.log("Task ID: " + taskId) //la notificación que se le envíe al usuario será para la task con esta ID
       console.log("User Task ID: " + authorTaskId) //se deberá enviar notificación a este usuario
       console.log("Tasker ID: " + taskerId) //el tasker que se le enviará al usuario como candidato
       await client.connect();
-      const taskExist = await client
-      .db("gestInc")
-      .collection("tasks")
-      .findOne({_id: taskId})
+      const taskExist = await tasksCollection.findOne({_id: taskId})
       if(taskExist){
         tasksCollection.updateOne({_id: taskId}, {$push: {tasker: taskerId}});
         res.send({res: 1});
@@ -348,7 +357,37 @@ router.post("/sendCandidate", async (req, res) => {
   }else{
     res.send({res: -1});
   }
-})
+});
+
+router.post('/getOneUser', async function(req, res, next) {
+  try {
+    //esperamos a que se conecte con el cliente
+    await client.connect();
+    const db = client.db("gestInc");
+    const usersCollection = db.collection("test_js");
+    const tasksCollection = db.collection("tasks");
+    try{
+      //con .find sin parámetro, nos retorna todos los elementos dentro de la colección
+      //const users = await usersCollection.find({_id: new ObjectId(req.body._id)});
+      const user = await usersCollection.findOne(
+        { _id: new ObjectId(req.body._id) },
+        { projection: { tasks: 1, _id: 0 } } // Proyectar solo el campo 'tasks' y excluir '_id'
+      );
+      console.log(user);
+      /*en caso de que users sea mayor a 0, significa que hay al menos 1 usuario
+      y enviamos tanto 0 o 1 dependiendo el caso y los usuarios*/
+      if(user == null){
+        res.send(JSON.stringify({res: 0, user: user}));
+      }else{
+        res.send(JSON.stringify({res: 1, user: user}));
+      }
+    }catch (error){
+      console.log(error);
+    }
+  } finally {
+    await client.close();
+  }
+});
 
 module.exports = router;
 

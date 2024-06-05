@@ -344,3 +344,10 @@ async function acceptTask() {
     alert("Ya te has inscrito a esta task");
   }
 }
+
+async function notificationTask() {
+  let request = new Requester();
+  let rest = await request.cookiesRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
+  console.log(rest.res);
+  document.getElementById("notification").style = "background-color: #37b5fd";
+};
