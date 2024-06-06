@@ -287,12 +287,12 @@ router.post('/addtask', async function(req, res, next) {
 
 router.post('/gettasks', async function(req, res, next){
   try{
-    await client.connect();
+    await connectClient();
+    const db = client.db("gestInc");
+    const usersCollection = db.collection("test_js");
+    const tasksCollection = db.collection("tasks");
     try{
-      const tasks = await client
-      .db("gestInc")
-      .collection("tasks")
-      .find().toArray();
+      const tasks = await tasksCollection.find().toArray();
       if(tasks.length > 0){
         res.send(JSON.stringify({res: 0, tasks: tasks}));
       } else {
@@ -305,8 +305,6 @@ router.post('/gettasks', async function(req, res, next){
   } catch (error) {
     console.log(error);
     res.status(500).send({ res: 3, message: 'Error connecting to database' });
-  } finally {
-    await client.close();
   }
 });
 
@@ -359,41 +357,91 @@ router.post("/sendCandidate", async (req, res) => {
   }
 });
 
+async function connectClient() {
+  if (!client.isConnected) {
+    try {
+      await client.connect();
+      console.log('Connected to MongoDB');
+    } catch (error) {
+      console.error('Failed to connect to MongoDB', error);
+      throw error;
+    }
+  }
+  return client;
+}
+
 router.post('/getOneUser', async function(req, res, next) {
   try {
     //esperamos a que se conecte con el cliente
-    await client.connect();
+    await connectClient();
     const db = client.db("gestInc");
     const usersCollection = db.collection("test_js");
     const tasksCollection = db.collection("tasks");
     try{
       //con .find sin parámetro, nos retorna todos los elementos dentro de la colección
-      //const users = await usersCollection.find({_id: new ObjectId(req.body._id)});
-      const user = await usersCollection.findOne(
-        { _id: new ObjectId(req.body._id) },
-        { projection: { tasks: 1, _id: 0 } } // Proyectar solo el campo 'tasks' y excluir '_id'
-      );
-      console.log(user);
+      const user = await usersCollection.findOne({_id: new ObjectId(req.body._id)}/*, {projection: {tasks: 1}}*/);
+      /*let tasks = user.tasks;
+      tasks.forEach((element) =>{
+        console.log("Tasks: "+ element);
+      })*/
       /*en caso de que users sea mayor a 0, significa que hay al menos 1 usuario
       y enviamos tanto 0 o 1 dependiendo el caso y los usuarios*/
-      if(user == null){
-        res.send(JSON.stringify({res: 0, user: user}));
-      }else{
+      if(user){
         res.send(JSON.stringify({res: 1, user: user}));
+      }else{
+        res.send(JSON.stringify({res: 0, user: user}));
       }
     }catch (error){
       console.log(error);
     }
+  } catch(error) {
+    res.send(JSON.stringify({res: 0, error: error.message}))
   } finally {
-    await client.close();
+    //await client.close();
+  }
+});
+
+async function buscarTasker(element, tasksCollection){
+  console.log("TAREA FUNCTION: " + element)
+  let task = tasksCollection.find({_id: new ObjectId(element)});
+  //console.log("Taskers: " + task);
+  return task;
+}
+
+router.post('/getTaskers', async function(req, res, next) {
+  try {
+    let existeTasker = false;
+    await connectClient();
+    const db = client.db("gestInc");
+    const usersCollection = db.collection("test_js");
+    const tasksCollection = db.collection("tasks");
+    try{
+      let tasks = req.body.tasks;
+      for (const element of tasks) {
+        console.log("Tasks: "+ element);
+        let task = await tasksCollection.findOne({_id: new ObjectId(element)});
+        if (task.tasker.length > 0) {
+          existeTasker = true;
+        } else {
+          console.log("TaskName: '" + task.title + "' don't have taskers");
+        }
+      }
+      
+      if(existeTasker){
+        //buscar usuario con ID encontrada en taskers
+        res.send(JSON.stringify({res: 1}));
+      }else{
+        res.send(JSON.stringify({res: 0}));
+      }
+
+    }catch (error){
+      console.log(error);
+    }
+  } catch(error) {
+    res.send(JSON.stringify({res: 0, error: error.message}))
+  } finally {
+    //await client.close();
   }
 });
 
 module.exports = router;
-
-/*const deletear = await client.db("gestInc").collection("test_js").deleteMany({ texto: 'hola mundo' });
-    console.log(deletear);
-    const updatear = await client.db("gestInc").collection("test_js").updateOne({ texto: "chau" },{$set: { texto: "hola"}});
-    console.log(updatear);
-    const trobar = await client.db("gestInc").collection("test_js").findOne({email: "agustin@gmail.com"});
-    console.log(trobar);*/

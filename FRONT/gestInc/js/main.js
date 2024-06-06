@@ -346,8 +346,13 @@ async function acceptTask() {
 }
 
 async function notificationTask() {
-  let request = new Requester();
-  let rest = await request.cookiesRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
-  console.log(rest.res);
-  document.getElementById("notification").style = "background-color: #37b5fd";
+  let r1 = new Requester();
+  let rest = await r1.cookiesRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
+  let tasks = rest.user.tasks;
+  /*tasks.forEach((element) => {
+    console.log("Tasks: " + element);
+  })*/
+  let restTasker = await r1.getTaskersRequest({tasks: tasks}, "http://localhost:3000/users/getTaskers")
+  if(restTasker.res == 1)
+    document.getElementById("notification").style = "background-color: #37b5fd";
 };
