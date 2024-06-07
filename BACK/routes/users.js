@@ -420,7 +420,7 @@ router.post('/getTaskers', async function(req, res, next) {
       for (const element of tasks) {
         console.log("Tasks: "+ element);
         let task = await tasksCollection.findOne({_id: new ObjectId(element)});
-        if (task.tasker.length > 0) {
+        if (task.tasker != null && task.tasker.length > 0) {
           existeTasker = true;
         } else {
           console.log("TaskName: '" + task.title + "' don't have taskers");
