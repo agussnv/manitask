@@ -4,10 +4,6 @@ body{
     font-family: "Raleway", sans-serif;
 }
 
-.marginlr{
-    margin: 0 100px;
-}
-
 #diverror{
     background-color: rgb(255, 143, 143);
     border: 1px solid rgb(253, 104, 104);
@@ -51,7 +47,8 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 100px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 ul{
@@ -64,8 +61,9 @@ ul li{
     margin-left: 20px;
 }
 
-ul li a{
-    color: white;
+a{
+    text-decoration: none;
+    color: black;
 }
 
 #notification{
@@ -91,19 +89,31 @@ ul li a{
     color: white;
 }
 
+.icon{
+    width: 25px;
+    height: 25px;
+}
+
+#notiON{
+    display: none;
+}
+
 .nolink{
     text-decoration: none;
-    font-weight: bold;
     font-family: "Raleway", sans-serif;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.ligth{
+    font-weight: 500;
 }
 
 .botonnav:hover{
     background-color: #30a3e6;
     border-color: #30a3e6;
-}
-
-.nolink:hover{
-    
 }
 
 .radius{
@@ -138,16 +148,8 @@ ul li a{
     height: 400px;
 }
 
-.ligth{
-    font-weight: 500;
-}
-
 .tcenter{
     text-align: center;
-}
-
-.inputs{
-    
 }
 
 .inputs input{
@@ -272,7 +274,6 @@ button{
     }
 }
 
-
 .inputsprofile{
     display: flex;
     justify-content: space-around;
@@ -323,7 +324,6 @@ button{
         outline: none;
     }
 }
-
 
 .tasks input::placeholder{
     font-family: "Raleway", sans-serif;
@@ -384,4 +384,68 @@ button{
 #a{
     width: 45px;
     height: 45px;
+}
+
+#fotoPerfil{
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    border: 1px solid black;
+    margin-right: 10px;
+}
+
+.arrow{
+    height: 10px;
+    width: 10px;
+    margin-left: 10px;
+    transition: transform .3s;
+}
+
+.arrow-rotate{
+    transform: rotate(180deg);
+}
+
+.dropdown{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 38px;
+    min-width: 160px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px -5px rgba(0,0,0,1);
+    z-index: 1;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    font-size: 15px;
+    padding: 8px 14px;
+    border-bottom: 1px solid rgb(197, 197, 197);
+    transition: 0.2s;
+}
+
+.dropdown-content a:last-child{
+    font-weight: bold;
+    border-bottom: none;
+}
+
+.dropdown-content a:hover{
+    background-color: #f0f0f0;
+}
+
+.show{
+    display: block;
+}
+
+.margenes{
+    max-width: 1200px;
+    margin: 0 auto;
 }

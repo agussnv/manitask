@@ -22,6 +22,35 @@
   }
 }*/
 
+document.addEventListener('DOMContentLoaded', function() {
+  //MENU DROP DEL NAV
+  const dropbtn = document.querySelector('.dropbtn')
+  const arrow = document.querySelector('.arrow')
+  const dropcontent = document.querySelector('.dropdown-content')
+
+  dropbtn.addEventListener('click',function(){
+    arrow.classList.toggle('arrow-rotate');
+    dropcontent.classList.toggle('show');
+  })
+
+  
+});
+
+//Notificacion de tasker
+async function notificationTask() {
+  let r1 = new Requester();
+  let rest = await r1.cookiesRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
+  let tasks = rest.user.tasks;
+  tasks.forEach((element) => {
+    console.log("Tareas: " + element);
+  })
+  let restTasker = await r1.getTaskersRequest({tasks: tasks}, "http://localhost:3000/users/getTaskers")
+  if(restTasker.res == 1){
+    document.getElementById("notiOFF").style = "display: none;";
+    document.getElementById("notiON").style = "display: block;";
+  }
+};
+
 async function createRegisterRequest(data) {
   const r1 = new Requester();
   //Hacemos un request a la ruta /register y le enviamos los parámetros que le hemos enviado desde los inputs
@@ -211,8 +240,14 @@ async function datosUsuari(){
 //Agarra la cookie mediante la función getCookie y la agrega al H1 del home.html
 function welcomeName(){
   const name = getCookie("username");
-  const original = document.getElementById("nombre").innerHTML;
-  const nom = document.getElementById("nombre").innerHTML = original + name;
+  const welcome = document.getElementById("nombre").innerHTML;
+  document.getElementById("nombre").innerHTML = welcome + name;
+}
+
+function buttonName(){
+  const name = getCookie("username");
+  const usuario = document.getElementById("usuario").innerHTML;
+  document.getElementById("usuario").innerHTML = usuario + name;
 }
 
 //Comprobar si ya existe una cookie, en caso de existir e ir al login.html, te redirige al home
@@ -344,15 +379,3 @@ async function acceptTask() {
     alert("Ya te has inscrito a esta task");
   }
 }
-
-async function notificationTask() {
-  let r1 = new Requester();
-  let rest = await r1.cookiesRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
-  let tasks = rest.user.tasks;
-  tasks.forEach((element) => {
-    console.log("Tareas: " + element);
-  })
-  let restTasker = await r1.getTaskersRequest({tasks: tasks}, "http://localhost:3000/users/getTaskers")
-  if(restTasker.res == 1)
-    document.getElementById("notification").style = "background-color: #37b5fd";
-};

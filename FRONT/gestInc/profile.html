@@ -14,11 +14,27 @@
 <body>
   <header>
     <nav>
-      <p id="marca">mani<span style="color: #37b5fd;">task</span></p>
+      <p id="marca"><a href="home.html" class="nolink">mani<span style="color: #37b5fd;">task</span></a></p>
       <ul>
-        <li><a class="nolink" href="home.html"><button type="button" class="nolink botonnav">Home</button></a></li>
-        <li><a class="nolink" href="profile.html"><button type="button" class="nolink botonnav">My profile</button></a></li>
-        <li><button type="button" onclick="logout()" class="nolink botonnav">Log out</button></li>
+        <li id="notiON"><img src="svg/notificacionON.svg" class="icon"></li>
+        <li id="notiOFF"><img src="svg/notificacionOFF.svg" class="icon"></li>
+        <script>
+         notificationTask();
+        </script>
+        <li class="dropdown flex vertical-center">
+          <img id="fotoPerfil" src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg">
+          <a href="#" class="dropbtn" id="usuario">Hola </a>
+          <script>
+            buttonName();
+          </script>
+          <img class="arrow" src="imgs/flecha-hacia-abajo-para-navegar.png">
+          <div class="dropdown-content">
+            <a href="profile.html">Profile</a>
+            <a href="profile.html">Tasks</a>
+            <a href="#" onclick="logout()">Log out</a>
+            </div>
+            </li>
+          <li><a class="bold" href="addtask.html"><button type="button" class="bold botonnav">Create task</button></a></li>
       </ul>
     </nav>
   </header>
