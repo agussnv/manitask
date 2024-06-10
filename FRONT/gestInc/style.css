@@ -249,7 +249,7 @@ button{
 
 #nombre{
     font-weight: 300;
-    font-size: 100px;
+    font-size: 67px;
     text-align: center;
 }
 
@@ -448,4 +448,28 @@ button{
 .margenes{
     max-width: 1200px;
     margin: 0 auto;
+}
+
+#tasker_container{
+    padding: 0;
+    display: block;
+}
+
+.taskerItem{
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #37b5fd;
+    margin-bottom: 20px;
+}
+
+.taskerName{
+    margin-left: 20px;
+}
+
+
+.taskerOptions{
+    margin-left: auto;
 }

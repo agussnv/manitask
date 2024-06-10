@@ -411,9 +411,9 @@ async function buscarTasker(element, tasksCollection){
 router.post('/getTaskers', async function(req, res, next) {
   try {
     let existeTasker = false;
+    let taskers;
     await connectClient();
     const db = client.db("gestInc");
-    const usersCollection = db.collection("test_js");
     const tasksCollection = db.collection("tasks");
     try{
       let tasks = req.body.tasks;
@@ -421,6 +421,7 @@ router.post('/getTaskers', async function(req, res, next) {
         console.log("Tasks: "+ element);
         let task = await tasksCollection.findOne({_id: new ObjectId(element)});
         if (task.tasker != null && task.tasker.length > 0) {
+          taskers = task.tasker;
           existeTasker = true;
         } else {
           console.log("TaskName: '" + task.title + "' don't have taskers");
@@ -429,7 +430,7 @@ router.post('/getTaskers', async function(req, res, next) {
       
       if(existeTasker){
         //buscar usuario con ID encontrada en taskers
-        res.send(JSON.stringify({res: 1}));
+        res.send(JSON.stringify({res: 1, taskers: taskers}));
       }else{
         res.send(JSON.stringify({res: 0}));
       }

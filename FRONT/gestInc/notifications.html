@@ -9,12 +9,12 @@
     <script src="./components/Requester.js"></script>
     <script src="./js/main.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Manitask - Inicio</title>
+    <title>Manitask - Notificaciones</title>
   </head>
   <body>
     <script>
       isNotLogged();
-      getTasks();
+      //getTasks();
       </script>
     <script>
     </script>
@@ -22,8 +22,8 @@
       <nav>
         <p id="marca"><a href="home.html" class="nolink">mani<span style="color: #37b5fd;">task</span></a></p>
         <ul>
-          <li id="notiON"><a href="notifications.html"><img src="svg/notificacionON.svg" class="icon"></a></li>
-          <li id="notiOFF"><a href="notifications.html"><img src="svg/notificacionOFF.svg" class="icon"></a></li>
+          <li id="notiON"><img src="svg/notificacionON.svg" class="icon"></li>
+          <li id="notiOFF"><img src="svg/notificacionOFF.svg" class="icon"></li>
           <script>
             notificationTask();
           </script>
@@ -45,18 +45,19 @@
       </nav>
     </header>
     <section class="margenes">
-      <div class="marginlr" style="text-align: center;;">
-        <h1 id="nombre" class="fade quicksand">Bienvenido </h1>
-        <script>
-          welcomeName();
-        </script>
-        <a class="bold" href="addtask.html"><button type="button" class="bold botonnav">Necesitas un manitas?</button></a>
-      </div>
-      <div class="marginlr"> <!--Contenedor seccion tasks-->
-        <h1>Available tasks</h1>
-        <div id="esquema" class="grid-container"> <!--Contenedor total task-->
-        </div>
-      </div>
+      <h1>Notificaciones</h1>
+      <p id="taskerInfo">Los usuarios son:</p>
+      <ul id="tasker_container">
+        <li class="taskerItem">
+          <p class="taskerName"><span style="font-weight: bold;">Enzo</span> se inscribió a tu tarea <span style="font-weight: bold;">Necesito cortarme el pelo</span></p>
+          <div class="taskerOptions">
+            <button>ACEPTAR</button>
+            <button>RECHAZAR</button>
+          </div>
+      </ul>
     </section>
+    <script>
+      getTaskers();
+    </script>
 </body>
 </html>

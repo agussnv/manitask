@@ -3,6 +3,7 @@
  *
  * @return {Promise<void>} A Promise that resolves when the table is successfully rendered, or rejects with an error message.
  */
+
 /*async function createReq() {
   const r1 = new Requester();
    const tableBody = document.getElementById("tableBody");
@@ -32,14 +33,12 @@ document.addEventListener('DOMContentLoaded', function() {
     arrow.classList.toggle('arrow-rotate');
     dropcontent.classList.toggle('show');
   })
-
-  
 });
 
 //Notificacion de tasker
 async function notificationTask() {
   let r1 = new Requester();
-  let rest = await r1.cookiesRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
+  let rest = await r1.userRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
   let tasks = rest.user.tasks;
   tasks.forEach((element) => {
     console.log("Tareas: " + element);
@@ -49,7 +48,83 @@ async function notificationTask() {
     document.getElementById("notiOFF").style = "display: none;";
     document.getElementById("notiON").style = "display: block;";
   }
+  return restTasker.taskers;
 };
+
+async function getTaskers(){
+  let taskers = await notificationTask();
+  let largo = taskers.length;
+  console.log("ID Taskers: " + taskers + ", Cantidad: " + largo);
+  showTaskers(taskers);
+};
+
+async function showTaskers(taskers){
+  let r1 = new Requester();
+  const listadoContain = document.getElementById("tasker_container");
+  for(const element of taskers) {
+    let item = document.createElement("li");
+    item.className = "taskerItem";
+    let textoTasker = document.createElement("p");
+    textoTasker.className = "taskerName";
+    let rest = await r1.userRequest({_id: element}, "http://localhost:3000/users/getOneUser")
+    textoTasker.innerHTML = '<span style="font-weight: bold;">' + rest.user.username + '</span> se inscribió a tu tarea <span style="font-weight: bold;">' + /*Nombre task*/ + "</span>";
+  }
+}
+
+function drawOnTable(res){
+  svgTime = "<svg xmlns='http://www.w3.org/2000/svg' width='25px' height='25px' viewBox='0 0 24 24' fill='none'><g id='SVGRepo_bgCarrier' stroke-width='0'/><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'/><g id='SVGRepo_iconCarrier'> <path d='M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z' stroke='#000000' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/> <path d='M12 6V12' stroke='#000000' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/> <path d='M16.24 16.24L12 12' stroke='#000000' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/> </g></svg>"
+  svgDollar = "<svg xmlns='http://www.w3.org/2000/svg' width='25px' height='25px' viewBox='0 0 24 24' role='img' aria-labelledby='dolarIconTitle' stroke='#000000' stroke-width='1.3' stroke-linecap='square' stroke-linejoin='miter' fill='none' color='#000000'><g id='SVGRepo_bgCarrier' stroke-width='0'/><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'/><g id='SVGRepo_iconCarrier'> <title id='dolarIconTitle'>Dolar</title> <path d='M12 4L12 6M12 18L12 20M15.5 8C15.1666667 6.66666667 14 6 12 6 9 6 8.5 7.95652174 8.5 9 8.5 13.140327 15.5 10.9649412 15.5 15 15.5 16.0434783 15 18 12 18 10 18 8.83333333 17.3333333 8.5 16'/></g></svg>"
+  const esquema = document.getElementById("esquema");
+  esquema.innerHTML = "";
+  res.forEach((element) => {
+    const contenedor = document.createElement("div");
+    contenedor.className="test";
+
+    const title = document.createElement("h2");
+    title.id="title";
+    const desc = document.createElement("p");
+    desc.id="desc";
+
+    const timeContain = document.createElement("div");
+    timeContain.className="flex vertical-center";
+    timeContain.innerHTML=svgTime;
+    const time = document.createElement("span");
+    time.id="time";
+
+    const dollarContain = document.createElement("div");
+    dollarContain.className="flex vertical-center";
+    dollarContain.innerHTML=svgDollar;
+    const dollar = document.createElement("span");
+    dollar.id="cash";
+
+    const footer = document.createElement("div");
+    footer.className = "flex vertical-center space-between";
+    const author = document.createElement("span");
+    author.id="author";
+    author.innerHTML = "Author: ";
+    const button = document.createElement("a");
+    button.className = "botonaction nolink";
+    button.innerHTML = "View Task";
+    button.href = "http://127.0.0.1:3001/FRONT/gestInc/test.html?id=" + element._id;
+
+    title.innerHTML = element.title;
+    desc.innerHTML = element.desc;
+    time.innerHTML = element.time;
+    dollar.innerHTML = element.price;
+    author.innerHTML += element.user.name;
+
+    timeContain.appendChild(time);
+    dollarContain.appendChild(dollar);
+    footer.appendChild(author);
+    footer.appendChild(button);
+    contenedor.appendChild(title);
+    contenedor.appendChild(desc);
+    contenedor.appendChild(timeContain);
+    contenedor.appendChild(dollarContain);
+    contenedor.appendChild(footer);
+    esquema.appendChild(contenedor);
+  })
+}
 
 async function createRegisterRequest(data) {
   const r1 = new Requester();
