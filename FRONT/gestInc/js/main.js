@@ -48,26 +48,38 @@ async function notificationTask() {
     document.getElementById("notiOFF").style = "display: none;";
     document.getElementById("notiON").style = "display: block;";
   }
-  return restTasker.taskers;
+  return restTasker;
 };
 
 async function getTaskers(){
-  let taskers = await notificationTask();
+  let res = await notificationTask();
+  let task = res.task;
+  let taskers = res.taskers;
   let largo = taskers.length;
   console.log("ID Taskers: " + taskers + ", Cantidad: " + largo);
-  showTaskers(taskers);
+  showTaskers(taskers, task);
 };
 
-async function showTaskers(taskers){
+async function showTaskers(taskers, task){
   let r1 = new Requester();
   const listadoContain = document.getElementById("tasker_container");
+  //HABRIA Q HACER UN FOR DENTRO DE UN FOR, PRIMER FOR = TASKS, Y SEGUNDO FOR = TASKERS
   for(const element of taskers) {
     let item = document.createElement("li");
     item.className = "taskerItem";
     let textoTasker = document.createElement("p");
     textoTasker.className = "taskerName";
     let rest = await r1.userRequest({_id: element}, "http://localhost:3000/users/getOneUser")
-    textoTasker.innerHTML = '<span style="font-weight: bold;">' + rest.user.username + '</span> se inscribió a tu tarea <span style="font-weight: bold;">' + /*Nombre task*/ + "</span>";
+    textoTasker.innerHTML = '<span style="font-weight: bold;">' + rest.user.username + '</span> se inscribió a tu tarea <span style="font-weight: bold;">' + task.title + "</span>";
+    let btncontain = document.createElement("div");
+    btncontain.className = "taskerOptions";
+    let btnaccept = document.createElement("button");
+    btnaccept.innerHTML = "ACEPTAR";
+    let btnrefuse = document.createElement("button");
+    btnrefuse.innerHTML = "RECHAZAR";
+    btncontain.appendChild(btnaccept,btnrefuse);
+    item.appendChild(textoTasker,btncontain);
+    listadoContain.appendChild(item);
   }
 }
 
