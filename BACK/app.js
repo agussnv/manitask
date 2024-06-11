@@ -33,7 +33,7 @@ app.use(
 app.use(express.json()); //probar, no se si esta linea es util para algo o no
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/test', testRouter);
+//app.use('/test', testRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

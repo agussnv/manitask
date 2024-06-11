@@ -447,4 +447,10 @@ router.post('/getTaskers', async function(req, res, next) {
   }
 });
 
+router.get('/FRONT/gestInc/addTask.html', (req, res) => {
+  const title = req.query.title;
+  console.log("Title:", title);
+  res.send("Received title: " + title); // Envía una respuesta al cliente
+});
+
 module.exports = router;
