@@ -26,12 +26,18 @@
 document.addEventListener('DOMContentLoaded', function() {
   //MENU DROP DEL NAV
   const dropbtn = document.querySelector('.dropbtn')
+  const dropNoti = document.querySelector('.dropbtn_Noti')
   const arrow = document.querySelector('.arrow')
   const dropcontent = document.querySelector('.dropdown-content')
+  const dropcontentNoti = document.querySelector('.dropdown-content_Noti')
 
   dropbtn.addEventListener('click',function(){
     arrow.classList.toggle('arrow-rotate');
     dropcontent.classList.toggle('show');
+  })
+
+  dropNoti.addEventListener('click',function(){
+    dropcontentNoti.classList.toggle('show');
   })
 });
 
@@ -77,8 +83,9 @@ async function showTaskers(taskers, task){
     btnaccept.innerHTML = "ACEPTAR";
     let btnrefuse = document.createElement("button");
     btnrefuse.innerHTML = "RECHAZAR";
-    btncontain.appendChild(btnaccept,btnrefuse);
-    item.appendChild(textoTasker,btncontain);
+    
+    btncontain.append(btnaccept, btnrefuse);
+    item.append(textoTasker, btncontain);
     listadoContain.appendChild(item);
   }
 }

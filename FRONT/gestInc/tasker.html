@@ -9,24 +9,32 @@
     <script src="./components/Requester.js"></script>
     <script src="./js/main.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Manitask - Notificaciones</title>
+    <title>Manitask - Inicio</title>
   </head>
   <body>
     <script>
       isNotLogged();
-      //getTasks();
+      getTasks();
       </script>
     <script>
     </script>
     <header>
       <nav>
         <p id="marca"><a href="home.html" class="nolink">mani<span style="color: #37b5fd;">task</span></a></p>
+        <p class="botonesOpcion"><a href="home.html">Post a task</a> | <a href="tasker.html" style="color: #37b5fd; font-weight: 600;">Browse tasks</a></p>
         <ul>
-          <li id="notiOFF"><img src="svg/notificacionOFF.svg" class="icon"></li>
-          <li id="notiON"><img src="svg/notificacionON.svg" class="icon"></li>
+          <li id="notiOFF"><a href="notifications.html"><img src="svg/notificacionOFF.svg" class="icon"></a></li>
+          <li id="notiON" class="dropdown flex vertical-center">
+            <a href="#" class="dropbtn_Noti"><img src="svg/notificacionON.svg" class="icon"></a>
+            <div class="dropdown-content_Noti">
+              <a href="notifications.html">Tienes nuevos taskers pendientes</a>
+              <a href="notifications.html">Has recibido un nuevo mensaje</a>
+            </div>
+          </li>
           <script>
             notificationTask();
           </script>
+          <!--MENU DESPLEGABLE-->
           <li class="dropdown flex vertical-center">
             <img id="fotoPerfil" src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg">
             <a href="#" class="dropbtn" id="usuario">Hola </a>
@@ -45,12 +53,11 @@
       </nav>
     </header>
     <section class="margenes">
-      <h1>Notificaciones</h1>
-      <p id="taskerInfo">Los usuarios son:</p>
-      <ul id="tasker_container"></ul>
+      <div class="marginlr"> <!--Contenedor seccion tasks-->
+        <h1>Available tasks</h1>
+        <div id="esquema" class="grid-container"> <!--Contenedor total task-->
+        </div>
+      </div>
     </section>
-    <script>
-      getTaskers();
-    </script>
 </body>
 </html>
