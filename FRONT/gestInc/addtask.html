@@ -46,19 +46,34 @@
       </ul>
     </nav>
   </header>
-  
+
   <div class="taskrecuadro">
     <div class="tasks">
-      <label for="">Title</label>
-      <input type="text" id="title">
-      <label for="">Description</label>
-      <input type="text" id="description">
-      <label for="">Time</label>
-      <input type="text" id="time">
-      <label for="">Price</label>
-      <input type="number" id="price">
-      <input type="button" value="Create task" onclick="addtask()">
+      <form action="">
+        <label for="title">Title</label>
+        <input type="text" id="title">
+        <label for="description">Description</label>
+        <input type="text" id="description">
+        <label for="time">Time</label>
+        <input type="text" id="time">
+        <label for="price">Price</label>
+        <input type="number" id="price">
+        <input type="button" value="Create task" onclick="addtask()">
+      </form>
     </div>
   </div>
+  <script>
+    // Obtener el query string de la URL
+    const queryString = window.location.search;
+    // Crear una instancia de URLSearchParams con el query string
+    const urlParams = new URLSearchParams(queryString);
+    // Obtener el valor del parámetro 'title'
+    const title = urlParams.get('title');
+    console.log(title);
+    // Mostrar el valor del parámetro 'title' en el input del formulari
+    if (title) {
+      document.getElementById('title').value = title;
+    }
+  </script>
 </body>
 </html>

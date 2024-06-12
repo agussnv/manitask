@@ -309,7 +309,6 @@ router.post('/gettasks', async function(req, res, next){
 });
 
 router.post("/findTask", async (req, res) => {
-  console.log("PEPE: " + req.body._id)
   await client.connect();
   const taskExist = await client
   .db("gestInc")
@@ -449,8 +448,7 @@ router.post('/getTaskers', async function(req, res, next) {
 
 router.get('/FRONT/gestInc/addTask.html', (req, res) => {
   const title = req.query.title;
-  console.log("Title:", title);
-  res.send("Received title: " + title); // Envía una respuesta al cliente
+  console.log("Title: ", title);
 });
 
 module.exports = router;
