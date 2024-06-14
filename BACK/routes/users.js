@@ -369,6 +369,7 @@ async function connectClient() {
   return client;
 }
 
+//Nos devuelve el usuario en caso de que exista, enviandole un id previamente
 router.post('/getOneUser', async function(req, res, next) {
   try {
     //esperamos a que se conecte con el cliente
@@ -411,27 +412,29 @@ router.post('/getTaskers', async function(req, res, next) {
   try {
     let existeTasker = false;
     let taskers;
+    let tasksArray = [];
     let task;
     await connectClient();
     const db = client.db("gestInc");
     const tasksCollection = db.collection("tasks");
     try{
-      let tasks = req.body.tasks;
-      for (const element of tasks) {
+      for (const element of req.body.tasks) {
         console.log("Tasks: "+ element);
         task = await tasksCollection.findOne({_id: new ObjectId(element)});
         if (task.tasker != null && task.tasker.length > 0) {
-          tasks = task;
+          console.log("entra con la task: "+element)
+          tasksArray.push(task);
           taskers = task.tasker;
           existeTasker = true;
-        } else {
-          console.log("TaskName: '" + task.title + "' don't have taskers");
-        }
+          } else {
+            console.log("TaskName: '" + task.title + "' don't have taskers");
+            }
       }
+      console.log("tarea final: "+tasksArray);
       
       if(existeTasker){
         //buscar usuario con ID encontrada en taskers
-        res.send(JSON.stringify({res: 1, taskers: taskers, task: tasks}));
+        res.send(JSON.stringify({res: 1, taskers: taskers, tasks: tasksArray}));
       }else{
         res.send(JSON.stringify({res: 0}));
       }
