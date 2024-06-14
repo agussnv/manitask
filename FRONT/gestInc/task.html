@@ -15,12 +15,19 @@
   <header>
     <nav>
       <p id="marca"><a href="home.html" class="nolink">mani<span style="color: #37b5fd;">task</span></a></p>
+      <p class="botonesOpcion"><a href="home.html" style="color: #37b5fd; font-weight: 600;">Post a task</a> | <a href="tasker.html">Browse tasks</a></p>
       <ul>
-        <li id="notiON"><img src="svg/notificacionON.svg" class="icon"></li>
-        <li id="notiOFF"><img src="svg/notificacionOFF.svg" class="icon"></li>
+        <li class="dropdown flex vertical-center">
+          <a href="#" class="dropbtn_Noti"><img id="iconNoti" src="svg/notificacionOFF.svg" class="icon"></a>
+          <div class="dropdown-content_Noti">
+            <a href="notifications.html">Tienes nuevos taskers pendientes</a>
+            <a href="notifications.html">Has recibido un nuevo mensaje</a>
+          </div>
+        </li>
         <script>
-         notificationTask();
+          notificationTask();
         </script>
+        <!--MENU DESPLEGABLE-->
         <li class="dropdown flex vertical-center">
           <img id="fotoPerfil" src="https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg">
           <a href="#" class="dropbtn" id="usuario">Hola </a>
@@ -30,7 +37,7 @@
           <img class="arrow" src="imgs/flecha-hacia-abajo-para-navegar.png">
           <div class="dropdown-content">
             <a href="profile.html">Profile</a>
-            <a href="profile.html">Tasks</a>
+            <a href="mytasks.html">Tasks</a>
             <a href="#" onclick="logout()">Log out</a>
             </div>
             </li>
@@ -38,13 +45,14 @@
       </ul>
     </nav>
   </header>
-      <h1 id="title">Title task: </h1>
-      <p id="desc">Description: </p>
-      <p id="price">Price: </p>
-      <p id="user">User: </p>
-      <input type="button" value="Accept" onclick="acceptTask()">
-      <script>
-        mostrarDataTask();
-      </script>
+
+  <h1 id="title">Title task: </h1>
+  <p id="desc">Description: </p>
+  <p id="price">Price: </p>
+  <p id="user">User: </p>
+  <input type="button" value="Accept" onclick="acceptTask()">
+  <script>
+    mostrarDataTask();
+  </script>
 </body>
 </html>

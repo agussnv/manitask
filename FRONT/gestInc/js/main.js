@@ -47,19 +47,16 @@ async function notificationTask() {
   let rest = await r1.userRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
   //Tareas del usuario obtenido
   let tasks = rest.user.tasks;
-  tasks.forEach((element) => {
-    console.log("Tareas: " + element);
-  })
   let restTasker = await r1.getTaskersRequest({tasks: tasks}, "http://localhost:3000/users/getTaskers")
-  console.log(restTasker)
   if(restTasker.res == 1){
-    document.getElementById("notiOFF").style = "display: none;";
-    document.getElementById("notiON").style = "display: block;";
+    document.getElementById("iconNoti").src = "svg/notificacionON.svg";
+  }else{
+    document.getElementById("iconNoti").src = "svg/notificacionOFF.svg";
   }
   return restTasker;
 };
 
-async function showTaskers(tasks){
+async function showTaskers(){
   let res = await notificationTask();
   let tasks = res.tasks;
   let r1 = new Requester();
@@ -202,39 +199,6 @@ async function login(){
   }
 }
 
-//FUNCIÓN PARA RECOGER EL REST.USER Y COMPARARLO CON DOCUMENT.COOKIE PERO NO SE COMO AGARRAR EL REST.USER SIN LLAMAR AL LOGIN CADA VEZ QUE QUIERE TESTEARCOOKIES
-/*async function testCookies(){
-  let email = document.getElementById("email").value;
-  let pass = document.getElementById("password").value;
-
-  let requester = new Requester();
-  let rest = await requester.loginRequest({
-    email: email,
-    password: pass
-  },"http://localhost:3000/users/login");
-  if(rest.res == 1){
-    alert("erroreerr");
-  }else if(rest.res == 0){
-    alert(document.cookie);
-    if(rest.user == document.cookie){
-      alert("mismo usuario que el guardado en las cookies");
-    }else{
-      alert("diferente usuario");
-    }
-  }
-}
-
-async function printUserInformation(data){
-  console.log("informacion usuario:")
-  console.log(data);
-  const r1 = new Requester();
-  let rest = await r1.loginRequest({
-    _id: data
-  },"http://localhost:3000/users/user");
-  console.log("--- main.js ---")
-  console.log(rest.user);
-}*/
-
 async function createResetPasswordRequest(data){
   const r1 = new Requester();
   let rest = await r1.postRequest({
@@ -365,19 +329,25 @@ async function addtask(){
     price: document.getElementById("price").value
   },"http://localhost:3000/users/addtask");
   if(rest.res == 1){
+    alert("añadida")
     location.href='home.html';
-  }else if(rest.res == 0){
+  }else if(rest.res != 1){
     alert(rest.res);
   }
+}
+
+async function getMyTasks(){
+  let r1 = await new Requester();
+  let res = await r1.userRequest({_id: getCookie("id")}, "http://localhost:3000/users/getmytasks")
 }
 
 async function getTasks(){
   const r1 = await new Requester();
   let req = await r1.postRequest({}, "http://localhost:3000/users/gettasks")
-  drawOnTable(req.tasks);
+  showAllTasks(req.tasks);
 }
 
-function drawOnTable(res){
+function showAllTasks(res){
   svgTime = "<svg xmlns='http://www.w3.org/2000/svg' width='25px' height='25px' viewBox='0 0 24 24' fill='none'><g id='SVGRepo_bgCarrier' stroke-width='0'/><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'/><g id='SVGRepo_iconCarrier'> <path d='M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z' stroke='#000000' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/> <path d='M12 6V12' stroke='#000000' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/> <path d='M16.24 16.24L12 12' stroke='#000000' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'/> </g></svg>"
   svgDollar = "<svg xmlns='http://www.w3.org/2000/svg' width='25px' height='25px' viewBox='0 0 24 24' role='img' aria-labelledby='dolarIconTitle' stroke='#000000' stroke-width='1.3' stroke-linecap='square' stroke-linejoin='miter' fill='none' color='#000000'><g id='SVGRepo_bgCarrier' stroke-width='0'/><g id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'/><g id='SVGRepo_iconCarrier'> <title id='dolarIconTitle'>Dolar</title> <path d='M12 4L12 6M12 18L12 20M15.5 8C15.1666667 6.66666667 14 6 12 6 9 6 8.5 7.95652174 8.5 9 8.5 13.140327 15.5 10.9649412 15.5 15 15.5 16.0434783 15 18 12 18 10 18 8.83333333 17.3333333 8.5 16'/></g></svg>"
   const esquema = document.getElementById("esquema");
@@ -411,7 +381,7 @@ function drawOnTable(res){
     const button = document.createElement("a");
     button.className = "botonaction nolink";
     button.innerHTML = "View Task";
-    button.href = "http://127.0.0.1:3001/FRONT/gestInc/test.html?id=" + element._id;
+    button.href = "http://127.0.0.1:3001/FRONT/gestInc/task.html?id=" + element._id;
 
     title.innerHTML = element.title;
     desc.innerHTML = element.desc;
@@ -431,6 +401,8 @@ function drawOnTable(res){
     esquema.appendChild(contenedor);
   })
 }
+
+
 
 function getParameterByName(name) {
   var regex = new RegExp("[?]" + name + "=([^]*)"),

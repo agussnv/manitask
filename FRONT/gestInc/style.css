@@ -94,10 +94,6 @@ a{
     height: 25px;
 }
 
-#notiON{
-    display: none;
-}
-
 .nolink{
     text-decoration: none;
     font-family: "Raleway", sans-serif;
@@ -299,7 +295,7 @@ button{
     justify-content: center;
 }
 
-.tasks{
+.tasks form{
     display: flex;
     flex-direction: column;
     width: 550px;
@@ -500,7 +496,7 @@ button{
 
 .botonesOpcion{
     text-align: center;
-    width: 50%;
+    width: 200px;
     position: absolute;
     left: 0;
     right: 0;

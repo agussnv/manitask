@@ -15,11 +15,10 @@
   <header>
     <nav>
       <p id="marca"><a href="home.html" class="nolink">mani<span style="color: #37b5fd;">task</span></a></p>
-      <p class="botonesOpcion"><a href="home.html" style="color: #37b5fd; font-weight: 600;">Post a task</a> | <a href="tasker.html">Browse tasks</a></p>
+      <p class="botonesOpcion"><a href="home.html"  style="color: #37b5fd; font-weight: 600;">Post a task</a> | <a href="tasker.html">Browse tasks</a></p>
       <ul>
-        <li id="notiOFF"><a href="notifications.html"><img src="svg/notificacionOFF.svg" class="icon"></a></li>
-        <li id="notiON" class="dropdown flex vertical-center">
-          <a href="#" class="dropbtn_Noti"><img src="svg/notificacionON.svg" class="icon"></a>
+        <li class="dropdown flex vertical-center">
+          <a href="#" class="dropbtn_Noti"><img id="iconNoti" src="svg/notificacionOFF.svg" class="icon"></a>
           <div class="dropdown-content_Noti">
             <a href="notifications.html">Tienes nuevos taskers pendientes</a>
             <a href="notifications.html">Has recibido un nuevo mensaje</a>
@@ -49,7 +48,7 @@
 
   <div class="taskrecuadro">
     <div class="tasks">
-      <form action="">
+      <form>
         <label for="title">Title</label>
         <input type="text" id="title">
         <label for="description">Description</label>
@@ -58,7 +57,7 @@
         <input type="text" id="time">
         <label for="price">Price</label>
         <input type="number" id="price">
-        <input type="button" value="Create task" onclick="addtask()">
+        <input type="submit" value="Create task" onclick="addtask()">
       </form>
     </div>
   </div>
