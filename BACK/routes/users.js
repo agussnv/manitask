@@ -225,11 +225,12 @@ router.post('/getmytasks', async function(req, res, next){
     const tasksCollection = db.collection('tasks');
     const usersCollection = db.collection('test_js');
     try{
-      const user = await usersCollection.find({_id: userID}).toArray();
+      const user = await usersCollection.findOne({_id: userID});
+      console.log(user);
       let userTasks = user.tasks;
       console.log(userTasks)
       if(userTasks.length > 0){
-        res.send(JSON.stringify({res: 0, tasks: tasks}));
+        res.send(JSON.stringify({res: 0, tasks: userTasks}));
       } else {
         res.send(JSON.stringify({res: 1, tasks: tasks}));
       }
@@ -296,6 +297,26 @@ router.post('/getOneUser', async function(req, res, next) {
   try{
     //con .find sin parámetro, nos retorna todos los elementos dentro de la colección
     const user = await usersCollection.findOne({_id: new ObjectId(req.body._id)}/*, {projection: {tasks: 1}}*/);
+    /*en caso de que users sea mayor a 0, significa que hay al menos 1 usuario
+    y enviamos tanto 0 o 1 dependiendo el caso y los usuarios*/
+    if(user){
+      res.send(JSON.stringify({res: 1, user: user}));
+    }else{
+      res.send(JSON.stringify({res: 0, user: user}));
+    }
+  }catch (error){
+    console.log("ERROR ==> "+error);
+  }
+});
+
+router.post('/getOneTasker', async function(req, res, next) {
+  //esperamos a que se conecte con el cliente
+  const db = await connectClient();
+  const usersCollection = db.collection('test_js');
+  const tasksCollection = db.collection('tasks');
+  try{
+    //con .find sin parámetro, nos retorna todos los elementos dentro de la colección
+    const user = await usersCollection.findOne({id: req.body.data}/*, {projection: {tasks: 1}}*/);
     /*en caso de que users sea mayor a 0, significa que hay al menos 1 usuario
     y enviamos tanto 0 o 1 dependiendo el caso y los usuarios*/
     if(user){

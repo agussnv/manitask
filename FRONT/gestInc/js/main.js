@@ -45,9 +45,12 @@ document.addEventListener('DOMContentLoaded', function() {
 async function notificationTask() {
   let r1 = new Requester();
   let rest = await r1.userRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
+  console.log(rest);
   //Tareas del usuario obtenido
   let tasks = rest.user.tasks;
+  console.log(tasks);
   let restTasker = await r1.getTaskersRequest({tasks: tasks}, "http://localhost:3000/users/getTaskers")
+  console.log(restTasker);
   if(restTasker.res == 1){
     document.getElementById("iconNoti").src = "svg/notificacionON.svg";
   }else{
@@ -68,8 +71,10 @@ async function showTaskers(){
       item.className = "taskerItem";
       let textoTasker = document.createElement("p");
       textoTasker.className = "taskerName";
-      let rest = await r1.userRequest({_id: element}, "http://localhost:3000/users/getOneUser")
-      textoTasker.innerHTML = '<span style="font-weight: bold;">' + rest.user.username + '</span> se inscribió a tu tarea <span style="font-weight: bold;">' + task.title + "</span>";
+      //COMO CAMBIAMOS EL REQUESTER, EL REQUESTRE AGARRA SIEMPRE EL GetCookie("id") y por eso siempre retorna "Agustin"
+      let taskerName = await r1.taskerRequest({id: element}, "http://localhost:3000/users/getOneTasker")
+      console.log(taskerName);
+      textoTasker.innerHTML = '<span style="font-weight: bold;">' + taskerName.user.username + '</span> se inscribió a tu tarea <span style="font-weight: bold;">' + task.title + "</span>";
       let btncontain = document.createElement("div");
       btncontain.className = "taskerOptions";
       let btnaccept = document.createElement("button");
