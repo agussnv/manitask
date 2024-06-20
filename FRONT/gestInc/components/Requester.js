@@ -200,6 +200,7 @@ class Requester {
         //Todas las variables que le pasaremos a lo largo del desarrollo para las diferentes funcionalidades
         body: JSON.stringify(data), // body data type must match "Content-Type" header
       });
+      
       const resp = await response.json();
       return resp;
     } catch (error) {

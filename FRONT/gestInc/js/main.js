@@ -4,6 +4,7 @@
  * @return {Promise<void>} A Promise that resolves when the table is successfully rendered, or rejects with an error message.
  */
 
+
 /*async function createReq() {
   const r1 = new Requester();
    const tableBody = document.getElementById("tableBody");
@@ -45,10 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
 async function notificationTask() {
   let r1 = new Requester();
   let rest = await r1.userRequest({_id: getCookie('id')}, "http://localhost:3000/users/getOneUser")
-  console.log(rest);
   //Tareas del usuario obtenido
   let tasks = rest.user.tasks;
-  console.log(tasks);
   let restTasker = await r1.getTaskersRequest({tasks: tasks}, "http://localhost:3000/users/getTaskers")
   console.log(restTasker);
   if(restTasker.res == 1){
@@ -62,6 +61,7 @@ async function notificationTask() {
 async function showTaskers(){
   let res = await notificationTask();
   let tasks = res.tasks;
+
   let r1 = new Requester();
   const listadoContain = document.getElementById("tasker_container");
   //HABRIA Q HACER UN FOR DENTRO DE UN FOR, PRIMER FOR = TASKS, Y SEGUNDO FOR = TASKERS
@@ -71,7 +71,10 @@ async function showTaskers(){
       item.className = "taskerItem";
       let textoTasker = document.createElement("p");
       textoTasker.className = "taskerName";
+
       //COMO CAMBIAMOS EL REQUESTER, EL REQUESTRE AGARRA SIEMPRE EL GetCookie("id") y por eso siempre retorna "Agustin"
+      console.log("ID USUARIO: " + element);
+
       let taskerName = await r1.taskerRequest({id: element}, "http://localhost:3000/users/getOneTasker")
       console.log(taskerName);
       textoTasker.innerHTML = '<span style="font-weight: bold;">' + taskerName.user.username + '</span> se inscribió a tu tarea <span style="font-weight: bold;">' + task.title + "</span>";
@@ -81,7 +84,7 @@ async function showTaskers(){
       btnaccept.innerHTML = "ACEPTAR";
       let btnrefuse = document.createElement("button");
       btnrefuse.innerHTML = "RECHAZAR";
-      
+
       btncontain.append(btnaccept, btnrefuse);
       item.append(textoTasker, btncontain);
       listadoContain.appendChild(item);

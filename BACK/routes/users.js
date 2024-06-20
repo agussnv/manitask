@@ -45,7 +45,7 @@ router.post('/login', async function(req, res, next) {
       res.send(JSON.stringify({res: 1}))
     }
   } catch (error) {
-    console.log("ERROR ==> "+error)
+    console.log("ERROR login ==> "+error)
   }
 });
 
@@ -87,7 +87,7 @@ router.post('/register', async function(req, res, next) {
       res.send(JSON.stringify({res: 2}));
     }
   } catch (error) {
-    console.log("ERROR ==> "+error)
+    console.log("ERROR register ==> "+error)
   }
 });
 
@@ -112,7 +112,7 @@ router.post('/reset', async function(req, res, next) {
       const updatear = await usersCollection.updateOne({ email: req.body.email},{$set: {password: contrasena}});
     }
   } catch (error) {
-    console.log("ERROR ==> "+error)
+    console.log("ERROR reset ==> "+error)
   }
 });
 
@@ -161,7 +161,7 @@ router.post('/getusers', async function(req, res, next) {
       console.log(error);
     }
   } catch (error) {
-    console.log("ERROR ==> "+error)
+    console.log("ERROR getusers ==> "+error)
   }
 });
 
@@ -293,7 +293,8 @@ router.post('/getOneUser', async function(req, res, next) {
   //esperamos a que se conecte con el cliente
   const db = await connectClient();
   const usersCollection = db.collection('test_js');
-  const tasksCollection = db.collection('tasks');
+  const idTasker = req.body.id;
+  console.log("idUser: "+ idTasker);
   try{
     //con .find sin parámetro, nos retorna todos los elementos dentro de la colección
     const user = await usersCollection.findOne({_id: new ObjectId(req.body._id)}/*, {projection: {tasks: 1}}*/);
@@ -305,27 +306,27 @@ router.post('/getOneUser', async function(req, res, next) {
       res.send(JSON.stringify({res: 0, user: user}));
     }
   }catch (error){
-    console.log("ERROR ==> "+error);
+    console.log("ERROR getOneUser ==> "+error);
   }
 });
 
 router.post('/getOneTasker', async function(req, res, next) {
   //esperamos a que se conecte con el cliente
-  const db = await connectClient();
   const usersCollection = db.collection('test_js');
-  const tasksCollection = db.collection('tasks');
+  const idTasker = req.body.data;
   try{
+    console.log("idUser: "+ idTasker);
     //con .find sin parámetro, nos retorna todos los elementos dentro de la colección
-    const user = await usersCollection.findOne({id: req.body.data}/*, {projection: {tasks: 1}}*/);
+    const user = await usersCollection.findOne({_id: idTasker}/*, {projection: {tasks: 1}}*/);
     /*en caso de que users sea mayor a 0, significa que hay al menos 1 usuario
     y enviamos tanto 0 o 1 dependiendo el caso y los usuarios*/
     if(user){
       res.send(JSON.stringify({res: 1, user: user}));
     }else{
-      res.send(JSON.stringify({res: 0, user: user}));
+      res.send(JSON.stringify({res: 0, user: null}));
     }
   }catch (error){
-    console.log("ERROR ==> "+error);
+    console.log("ERROR getOneTasker ==> "+error);
   }
 });
 
@@ -339,20 +340,25 @@ router.post('/getTaskers', async function(req, res, next) {
   const db = await connectClient();
   const tasksCollection = db.collection('tasks');
   let existeTasker = false;
-  let taskers;
+  let taskers = [];
   let tasksArray = [];
   let task;
   try{
+    let vuelta = 0;
     for (const element of req.body.tasks) {
+      vuelta += 1;
       task = await tasksCollection.findOne({_id: new ObjectId(element)});
       if (task.tasker != null && task.tasker.length > 0) {
         tasksArray.push(task);
-        taskers = task.tasker;
+        taskers.push(task.tasker);
         existeTasker = true;
       } else {
           //console.log("TaskName: '" + task.title + "' don't have taskers");
       }
     }
+    console.log(tasksArray);
+    console.log(vuelta)
+    console.log(taskers);
       
     if(existeTasker){
       //buscar usuario con ID encontrada en taskers
@@ -362,7 +368,7 @@ router.post('/getTaskers', async function(req, res, next) {
     }
 
   }catch (error){
-    console.log("ERROR ==> "+error);
+    console.log("ERROR getTaskers ==> "+error);
   }
 });
 
